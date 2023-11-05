@@ -1,0 +1,9 @@
+#   IGNORED FIELS
+*.pdf
+*.exe
+*.ini
+*.out
+tempCodeRunnerFile.*
+
+#   IGNORED FOLDERS
+\.vscode
