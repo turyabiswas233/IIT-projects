@@ -1,0 +1,1 @@
+// Write a program that reads ten characters from the keyboard.Each time a character is read, use its ASCII code value to output a string of periods equal in number to this code.For example, given the letter 'A', whose code is 65, your program would output 65 periods.
