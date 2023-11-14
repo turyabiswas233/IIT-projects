@@ -24,3 +24,4 @@ int printArr(int row, int col, int (*b)[3])
         
     }
 }
+
