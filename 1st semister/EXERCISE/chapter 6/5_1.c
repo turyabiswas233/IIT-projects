@@ -1,22 +1,26 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 int main(void)
 {
 
-    char *p[][3] = {"Yes", "No", "Maybe. Rephrase the question"};
+    char p[][50] = {"Yes", "No", "Maybe. Rephrase the question"};
 
-    char *q;
-    scanf("%s", q);
-    int len = strlen(q);
-    for (int i = 0; q[i]; i++)
+    char *query = (char *)malloc(sizeof(char) * 50);
+    int len;
+
+    do
     {
-        if (i == len % 3)
+        fgets(query, 100, stdin);
+        query[strcspn(query, "\n")] = '\0';
+        if (!strcmp(query, "exit"))
         {
-            printf("%s\n", q[i]);
+            printf("Exiting...\n");
+            break;
         }
-    }
-
-    printf(q);
+        len = strlen(query);
+        printf("%s\n", p + len % 3);
+    } while (1);
 
     return 0;
 }
