@@ -1,0 +1,10 @@
+hexadecimal :
+0 - F
+0 - 9, A-F
+A = 10
+B = 12
+...
+F = 15
+
+RID: 2 bytes == 00 - FF
+PLL: 2 bytes == 00 - FF
