@@ -2,16 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #define PH_BOOK "phonebook.txt"
 #define max 1000
 // structure
 struct phnbk
 {
-    char name[20];
-    char num[15];
+    char name[10];
+    char num[11];
+    char areaCode[4];
 } p[max];
-
+union phnU
+{
+    struct phnbk pb;
+    char str[11 + 12 + 5];
+} pu[max];
 int i;
 // required functions
 void showMenu();
@@ -23,7 +27,6 @@ void trim(char *str);
 
 int main()
 {
-    system("cls");
     unsigned char setMenu = '0';
     do
     {
@@ -91,11 +94,13 @@ void setList()
     {
         /* code */
         printf("Person [%d]:\n", j + 1);
-        printf("\tEnter name [20]: ");
+        printf("\tEnter name [10]: ");
         // fgets(phonebook[i][0], 10, stdout);
         scanf(" %s", p[j].name);
-        printf("\tEnter PhoneNUM [11]: ");
+        printf("\tEnter PhoneNumber [11]: ");
         scanf(" %s", p[j].num);
+        printf("\tEnter Area code [4]: ");
+        scanf(" %s", p[j].areaCode);
     }
     printf("\nYOUR DATA HAS NOT YET SAVED. TO SAVE DATA, PLEASE CHOOSE (3) FROM THE MENU.\n");
     // show them in load section
@@ -159,7 +164,7 @@ void saveList()
 
     for (int j = 0; j < i; j++)
     {
-        fprintf(fp, "%10s-%11s\n", p[j].name, p[j].num);
+        fprintf(fp, "%10s %11s %4d\n", p[j].name, p[j].num, atoi(p[j].areaCode));
     }
 
     fclose(fp);
@@ -182,30 +187,28 @@ void loadList()
     i = 0;
     for (int j = 0; j < db_num; j++, i++)
     {
-        if (fread(p[j].name, 20, 1, fp) == 1 && fread(p[j].num, 11, 1, fp) == 1)
+        char sp = ' ';
+        sp = (j < db_num) ? '|' : ' ';
+        if (j == 0)
+            printf("\n\tPhonebook\n\t---------");
+        if (fread(pu[j].str, 28, 1, fp) == 1)
         {
-
-            int len = strlen(p[j].name);
-            p[j].name[len - 1] = '\0';
-            len = strlen(p[j].num);
-            p[j].num[len - 1] = '\0';
+            printf("\n\tPerson-%3d", j + 1);
+            pu[i].pb.name[10] = '\0';
+            printf("\n\t|____%s", pu[i].pb.name);
+            pu[i].pb.name[10] = ' ';
+            pu[i].pb.num[12] = '\0';
+            printf("\n\t|____%s", pu[i].pb.num);
+            pu[i].pb.num[12] = ' ';
+            pu[i].pb.areaCode[0] = ' ';
+            printf("\n\t|____%s", pu[i].pb.areaCode);
         }
         else
             break;
     }
     fclose(fp);
-
-    char sp = ' ';
-    for (int j = 0; j < i; j++)
-    {
-        printf("\n\tPhonebook");
-        printf("\n\t---------");
-        printf("\nPerson-%d", j + 1);
-        printf("\n|______%10s", sp, p[j].name);
-        printf("\n|____%11s", sp, p[j].num);
-    }
-
     printf("\n\n##    Phone numbers has been loaded.    ##\n");
+    return;
 }
 
 // A function to trim the leading and trailing spaces of a string

@@ -1,205 +1,219 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-//#define max 3
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-//function
-void infu();
-void name();
-void writer();
-void publr();
-void catalog();
-void load();
+#define MAX 100
+#define CAT_FILE "catfile.bin"
 
-//structure
-struct book
+int menu(void);
+void display(int i);
+void authSearch(void);
+void titleSearch(void);
+void enter(void);
+void save(void);
+void load(void);
+
+struct bookType
 {
-    char cpydt[100];
-    char edtn[100];
-    int  prize;
-    int  page;
+    unsigned date;    // copyright date
+    unsigned char ed; // edition
+    unsigned pages;   // lenght of book
 };
+
 struct catalog
 {
-    /* data */
-    char name[100];
-    char writer[100];
-    char publr[100];
-    struct book tp;
-}*c;
-int n;
-//main function
-int main(){
-    //manu
-    c=(struct catalog*)malloc(sizeof(struct catalog)*100);
-    if(c==NULL)
-    {
-        printf("memory allocation failed\n");
-        exit(1);
-    }
-    printf("\tcard catalog\n");
-    printf("\t------------\n");
-    printf("1 for enter information\n");
-    printf("2 for search by book name\n");
-    printf("3 for search by writer name\n");
-    printf("4 for search by publication name\n");
-    printf("5 for save the catalog in a file\n");
-    printf("6 for load the file\n");
-    printf("7 for quit\n");
-    //choice
+    char name[80];
+    char title[80];
+    char pub[80];
+    struct bookType book;
+} cat[MAX];
+
+int top = 0; // last loaction used
+
+// main function
+int main()
+{
     int choice;
-    while (1)
+
+    load();
+    do
     {
-        /* code */
-        printf("enter your choice(press 1-7):");
-        scanf("%d",&choice);
-        printf("\n");
-        if(choice==7)    break;
+        choice = menu();
         switch (choice)
         {
-            case 1:
-                infu();
-                break;
-            case 2:
-                name();
-                break;    
-            case 3:
-                writer();
-                break;
-            case 4:
-                publr();
-                break;
-            case 5:
-                catalog();
-                break;
-            case 6:
-                load();
-                break;
-            default:   
-                printf("error");
-                break;
+        case 1:
+            enter(); // enter books
+            break;
+        case 2:
+            authSearch(); // search by author
+            break;
+        case 3:
+            titleSearch(); // search by title
+            break;
+        case 4:
+            save();
+        default:
+            break;
         }
-    }
+    } while (choice != 5);
+
     return 0;
 }
-//information 
-void infu(){
+
+// show menu
+int menu(void)
+{
     int i;
-    printf("enter the number of books:");
-    scanf("%d",&n);
-    getchar();
-    for(i=0;i<n;i++)
+    char str[80];
+
+    printf("Card catalog:\n");
+    printf("%4d. Enter books\n", 1);
+    printf("%4d. Search by Author\n", 2);
+    printf("%4d. Search by Title\n", 3);
+    printf("%4d. Save catalog\n", 4);
+    printf("%4d. Quit\n", 5);
+
+    do
     {
-        printf("enter the book name: ");
-        fgets(c[i].name,100,stdin);
-        printf("enter the book's writer name: ");
-        fgets(c[i].writer,100,stdin);
-        printf("enter the publication name: ");
-        fgets(c[i].publr,100,stdin);
-        printf("enter the copywrite date: ");
-        fgets(c[i].tp.cpydt,100,stdin);
-        printf("enter the edition: ");
-        fgets(c[i].tp.edtn,100,stdin);
-        printf("entern the prize: ");
-        scanf("%d",&c[i].tp.prize);
-        printf("enter the number of pages: ");
-        scanf("%d",&c[i].tp.page);
-        getchar();
-    }
+        printf("Choose your selection: ");
+        gets(str);
+        i = atoi(str);
+        printf("\n");
+    } while (i < 1 || i > 5);
+    return i;
 }
 
-void name(){
-    char nm[100];
-    printf("enter a book name: ");
-    fgets(nm,100,stdin);
-    int i,f=0;
-    for(i=0;i<n;i++)
+// enter books into database
+void enter(void)
+{
+    int i = 0;
+    char temp[80];
+
+    for (i = 0; i < MAX; i++)
     {
-        if(!(strcmp(n,c[i].name)))
+        printf("Enter author name (Enter to quit): ");
+        gets(cat[i].name);
+        if (!*cat[i].name)
+            break;
+        printf("Enter title[char *]: ");
+        gets(cat[i].title);
+        printf("Enter publisher[char *]: ");
+        gets(cat[i].pub);
+        printf("Enter copyright date[1-31][number]: ");
+        gets(temp);
+        cat[i].book.date = (unsigned)atoi(temp);
+        printf("Enter edition[number]: ");
+        gets(temp);
+        cat[i].book.ed = (unsigned char)atoi(temp);
+        printf("Enter number of pages[number]: ");
+        gets(temp);
+        cat[i].book.pages = (unsigned)atoi(temp);
+    }
+    top = i;
+}
+
+// search by author
+void authSearch(void)
+{
+    char name[80];
+    int i, found;
+    printf("Name [80]: ");
+    gets(name);
+
+    found = 0;
+    for (i = 0; i < top; i++)
+    {
+        if (!strcmp(name, cat[i].name))
         {
-            f=1;
+            display(i);
+            found = 1;
+            printf("\n");
             break;
         }
     }
-    if(f)
-    {
-      printf("found\n");
-      printf("%s -> %s -> %s -> %s -> %s -> %d ->%d\n",c[i].name,c[i].writer,c[i].publr,c[i].tp.cpydt,c[i].tp.edtn,c[i].tp.page,c[i].tp.prize);
-    }
-    else    printf("not found\n");
-    
+    if (!found)
+        printf("Not found\n");
 }
-//search bt writer name
-void writer(){
-    char w[100];
-    printf("enter a writer name: ");
-    fgets(w,100,stdin);
-    int i, f=0;
-    for( i=0;i<n;i++)
+
+// search by title
+void titleSearch(void)
+{
+    char title[80];
+    int i, found;
+    printf("Title [80]: ");
+    gets(title);
+
+    found = 0;
+    for (i = 0; i < top; i++)
     {
-        if(!(strcmp(w,c[i].writer)))
+        if (!strcmp(title, cat[i].title))
         {
-            f=1;
+            display(i);
+            found = 1;
+            printf("\n");
             break;
         }
     }
-    if(f)
-    {
-      printf("found\n");
-      printf("%s -> %s -> %s -> %s -> %s -> %d ->%d\n",c[i].name,c[i].writer,c[i].publr,c[i].tp.cpydt,c[i].tp.edtn,c[i].tp.page,c[i].tp.prize);
-    }
-    else    printf("not found\n");
-    
-}
-//search by publisher name
-void publr(){
-    char p[100];
-    printf("enter publication name: ");
-    fgets(p,100,stdin);
-    int i,f=0;
-    for( i=0;i<n;i++)
-    {
-        if(!(strcmp(p,c[i].publr)))
-        {
-            f=1;
-            break;
-        }
-    }
-    if(f)
-    {
-      printf("found\n");
-      printf("%s -> %s -> %s -> %s -> %s -> %d -%d\n",c[i].name,c[i].writer,c[i].publr,c[i].tp.cpydt,c[i].tp.edtn,c[i].tp.page,c[i].tp.prize);
-    }
-    else    printf("not found\n");
+    if (!found)
+        printf("Not found\n");
 }
 
-//save to the file
-void catalog(){
-    FILE *fp;
-    fp=fopen("book.txt","w");
-    //fprintf(fp,"book name\twriter name\tpublication name\tcopywrite date\tedition\tprize\n");
-    //fprintf(fp,"---------\t-----------\t----------------\t--------------\t-------\t-----\t");
-    for(int i=0;i<n;i++)
-        fprintf(fp,"%s--> %s--> %s--> %s--> %s--> %d--> %d\n",c[i].name,c[i].writer,c[i].publr,c[i].tp.cpydt,c[i].tp.edtn,c[i].tp.page,c[i].tp.prize);
-    fclose(fp);
+// display catalog entry
+void display(int i)
+{
+    printf("%s\n", cat[i].title);
+    printf("by %s\n", cat[i].name);
+    printf("Published by %s\n", cat[i].name);
+    printf("Copyright: %u, edition: %u\n", cat[i].book.date, cat[i].book.ed);
+    printf("Page: %u\n", cat[i].book.pages);
 }
 
-void load (void)
+// load the castalog file
+void load(void)
 {
     FILE *fp;
-    if((fp=fopen("book.txt","r"))==NULL)
+    fp = fopen(CAT_FILE, "rb");
+    if (fp == NULL)
     {
-        printf("cannot open the file\n");
+        printf("Catalog file not found\n");
+        return;
+    }
+
+    if (fread(&top, sizeof top, 1, fp) != 1)
+    {
+        printf("Error reading count.\n");
         exit(1);
     }
-   for(int i=0;i<n;i++)
-        fscanf(fp,"%s %s %s %s %s %d %d",c[i].name,c[i].writer,c[i].publr,c[i].tp.cpydt,c[i].tp.edtn,&c[i].tp.page,&c[i].tp.prize);
+    if (fread(cat, sizeof cat, 1, fp) != 1)
+    {
+        printf("Error reading count.\n");
+        exit(1);
+    }
+
     fclose(fp);
 }
 
-//eta hoise?
-// no pura hoinai ami bad dia raksi ar dekhi nai
-
-// eta ki krslim?aita tui fget er oita thik krsili aro kj baki ase ami ar kori nai
-
-//oh bujsi ami eta likhe rksi. nibo
+// save the catalog file
+void save(void)
+{
+    FILE *fp;
+    fp = fopen(CAT_FILE, "wb");
+    if (fp == NULL)
+    {
+        printf("Catalog file not found\n");
+        return;
+    }
+    if (fwrite(&top, sizeof top, 1, fp) != 1)
+    {
+        printf("Error writing count\n");
+        exit(1);
+    }
+    if (fwrite(cat, sizeof cat, 1, fp) != 1)
+    {
+        printf("Error writing count\n");
+        exit(1);
+    }
+    else
+        printf("!!Data saved!!\n");
+    fclose(fp);
+}
