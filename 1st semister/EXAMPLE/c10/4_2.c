@@ -32,8 +32,8 @@ int main()
         flt_read.food = rand() % 2;
         flt_read.waste = rand() % 2;
 
-        fwrite(&flt_read, sizeof flt_read, 1, fp);
         display(flt_read);
+        fwrite(&flt_read, sizeof flt_read, 1, fp);
     }
     fclose(fp);
     return 0;
