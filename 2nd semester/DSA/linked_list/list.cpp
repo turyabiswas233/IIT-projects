@@ -41,6 +41,26 @@ void printList()
         ptr = ptr->next;
     }
 }
+void searchNode(int value)
+{
+    students *ptr;
+    ptr = start;
+    while (ptr != NULL)
+    {
+        if (ptr->roll == value)
+        {
+            printf("Roll found in list\nRoll: %d; CGPA: %0.2f\n", ptr->roll, ptr->cgpa);
+            return;
+        }
+        ptr = ptr->next;
+        if (ptr->roll > value)
+        {
+            printf("Not found!!");
+            return;
+        }
+    }
+    printf("Not found!!");
+}
 int main(int argc, char *argv[])
 {
     int n;
@@ -54,6 +74,9 @@ int main(int argc, char *argv[])
         cin >> roll >> cgpa;
         createNode(roll, cgpa);
     }
+    int findROll;
+    cin >> findROll;
+    searchNode(findROll);
 
     printList();
 }

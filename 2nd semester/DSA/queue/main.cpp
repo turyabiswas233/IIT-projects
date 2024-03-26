@@ -1,52 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define range 99999
-
-class MyStack
+class MyQueue
 {
-
 private:
-    int mystack[range] = {0};
+    int myqueue[range] = {0};
     int front = 0;
     int rear = -1;
 
 public:
     bool isEmpty()
     {
-        return rear >= 0 ? false : true;
+        return front <= rear ? false : true;
     }
     void push(int x)
     {
 
         if (rear + 1 == range)
         {
-            cout << "Stack OVERFLOWED" << endl;
+            cout << "QUEUE OVERFLOWED" << endl;
         }
         else
         {
-            mystack[++rear] = x;
+            myqueue[++rear] = x;
         }
     }
     int pop()
     {
         if (isEmpty())
         {
-            cout << "Stack UNDERFLOWED" << endl;
+            cout << "QUEUE Empty!!" << endl;
         }
         else
         {
-            rear--;
+            front++;
         }
-        return mystack[rear + 1];
+        return myqueue[front - 1];
     }
 };
 
-int main()
+int main(int argc, char const *argv[])
 {
     int n;
     int value;
-    MyStack stacks;
-    stack<int> x;
+    MyQueue queues;
     cout << "What do u want? [1. push(), 2. pop()]: ";
     cin >> n;
     switch (n)
@@ -58,11 +55,11 @@ int main()
             cin >> value;
             if (value == -1)
                 break;
-            stacks.push(value);
+            queues.push(value);
         } while (value != -1);
         break;
     case 2:
-        stacks.pop();
+        queues.pop();
         break;
 
     default:
@@ -70,8 +67,10 @@ int main()
         break;
     }
 
-    while (!stacks.isEmpty())
+    while (!queues.isEmpty())
     {
-        cout << stacks.pop() << " ";
+        cout << queues.pop() << " ";
     }
+
+    return 0;
 }
