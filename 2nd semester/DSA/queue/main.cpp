@@ -37,6 +37,10 @@ public:
         }
         return myqueue[front - 1];
     }
+    int size()
+    {
+        return rear - front + 1;
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -66,10 +70,9 @@ int main(int argc, char const *argv[])
         cout << "INVALID Option\n";
         break;
     }
-
     while (!queues.isEmpty())
     {
-        cout << queues.pop() << " ";
+        cout << queues.size() << "->" << queues.pop() << endl;
     }
 
     return 0;
