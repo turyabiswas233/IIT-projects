@@ -1,21 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum Color
+{
+    WHITE,
+    GRAY,
+    BLACK
+};
+typedef struct graph
+{
+    enum Color color;
+    char *name;
+    int prev;
+    int d;
+    int f;
+} Graph;
+
 int size = 0;
 int **arr;
-int *visited;
-
+Graph **g;
+int time;
 void DFS(int i)
 {
-    int j;
-    printf("%d ");
-    visited[i] = 1;
-    for (j = 0; j < size; j++)
+    if (g[i]->color == WHITE)
     {
-        if (arr[i][j] == 1 && visited[j] == 0)
+        g[i]->color = GRAY;
+        time++;
+        g[i]->d = time;
+
+        for (int k = 0; k < size; k++)
         {
-            DFS(j);
+            if (g[k]->color == WHITE && arr[i][k] == 1)
+            {
+                g[k]->prev = i;
+                DFS(k);
+            }
         }
+
+        g[i]->color = BLACK;
+        g[i]->f = ++time;
     }
 }
 void printgraph()
@@ -24,44 +47,78 @@ void printgraph()
     {
         for (int j = 0; j < size; j++)
         {
-            printf("%d ", arr[i][j]);
+
+            printf("%2d ", arr[i][j]);
         }
         printf("\n");
     }
 }
-int main()
+void initGraph()
 {
-    scanf("%d", &size);
     arr = (int **)malloc(sizeof(int *) * size);
-    if (arr == NULL)
+    g = (Graph **)malloc(size * sizeof(Graph *));
+    if (arr == NULL || g == NULL)
     {
+        perror("Failed to init graph and matrix\n");
         exit(1);
     }
-    visited = (int *)malloc(size * sizeof(int));
     for (int i = 0; i < size; i++)
     {
         arr[i] = (int *)malloc(size * sizeof(int));
+        g[i] = (Graph *)malloc(sizeof(Graph));
+        g[i]->name = (char *)malloc(sizeof(char) * 50);
+        g[i]->color = WHITE;
+        g[i]->d = -1;
+        g[i]->f = -1;
+        g[i]->prev = -1;
+        scanf(" %s", g[i]->name);
+
         if (arr[i] == NULL)
         {
+            perror("failed to create matrix\n");
             exit(1);
         }
-        visited[i] = 0;
-        /* code */
+        if (g[i] == NULL)
+        {
+            perror("failed to create graph\n");
+            exit(1);
+        }
+
         for (int j = 0; j < size; j++)
         {
             arr[i][j] = 0;
         }
     }
+}
+
+void printPath(int s, int d)
+{
+    if (s == d)
+        printf("%s", g[s]->name);
+    else if (g[d]->prev == -1)
+        printf("NO PATH]\n");
+    else
+    {
+        printPath(s, g[d]->prev);
+        printf("->%s", g[d]->name);
+    }
+}
+int main()
+{
     int edges;
-    scanf("%d", &edges);
+    scanf("%d %d", &size, &edges);
+    initGraph();
     for (int i = 0; i < edges; i++)
     {
         int x, y;
         scanf("%d %d", &x, &y);
-        arr[x][y] = arr[y][x] = 1;
+        arr[x][y] = 1;
     }
-    printgraph();
+    // printgraph();
+    time = 0;
     DFS(0);
+
+    printPath(0, 3);
 
     return 0;
 }
