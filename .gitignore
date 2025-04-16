@@ -4,6 +4,8 @@
 *.ini
 *.out
 tempCodeRunnerFile.*
-
+*.class
+\bin
+\lib
 #   IGNORED FOLDERS
 \.vscode
