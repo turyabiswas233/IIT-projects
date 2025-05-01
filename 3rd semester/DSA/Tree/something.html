@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .allList {
+            display: grid;
+            gap: .5em;
+            max-width: 500px; 
+            padding: 50px;
+        }
+        .box{
+            display: flex;
+            gap: 5pt;
+        }
+        .left , .right{
+            height: fit-content;
+            padding: 5pt;
+            font-weight: 600;
+            border-radius: 2pt;
+        }
+        .left{
+            background-color: #21fa;
+            color: white;
+        }
+        .right{
+            background-color: #2faa;
+            color: black;
+        }
+         
+    </style>
+  </head>
+  <body>
+    <section>
+      <input type="number" id="searchBox" />
+      <button type="button" id="submit">Find</button>
+      <button type="button" id="add">Add</button>
+    </section>
+    <p class="allList"></p>
+    <p id="result"></p>
+    <script src="./BST.js"></script>
+  </body>
+</html>
