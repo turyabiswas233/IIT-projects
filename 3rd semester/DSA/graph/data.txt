@@ -1,0 +1,16 @@
+5
+dha
+raj
+syl
+khu
+ctg
+7
+dha syl 250
+dha khu 200
+raj dha 320
+raj khu 320
+syl raj 400
+ctg syl 350
+syl ctg 350
+
+dha syl
