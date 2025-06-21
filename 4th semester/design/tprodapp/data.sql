@@ -4,6 +4,8 @@ drop table if exists orders;
 
 drop table if exists users;
 
+drop table if exists products;
+
 CREATE TABLE
     users (
         id required SERIAL AUTO PRIMARY KEY,
@@ -19,6 +21,16 @@ CREATE TABLE
         order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(50) NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+
+-- create products table
+CREATE TABLE
+    products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        price DECIMAL(10, 2) NOT NULL,
+        category VARCHAR(100),
+        quantity INT NOT NULL
     );
 
 -- create order_items table
@@ -38,6 +50,17 @@ INSERT INTO
 VALUES
     (1, 'John Doe', 'john@gmail.com'),
     (2, 'Jane Smith', 'jane@gmail.com');
+
+INSERT INTO
+    products (id, name, price, category, quantity)
+VALUES
+    (1, 'Product A', 19.99, 'Electronics', 100),
+    (2, 'Product B', 9.99, 'Books', 50),
+    (3, 'Product C', 29.99, 'Clothing', 200),
+    (4, 'Product D', 49.99, 'Home & Kitchen', 75),
+    (5, 'Product E', 15.99, 'Sports', 150),
+    (6, 'Product F', 5.99, 'Toys', 300),
+    (7, 'Product G', 39.99, 'Beauty', 80);
 
 INSERT INTO
     orders (user_id, order_date, status)

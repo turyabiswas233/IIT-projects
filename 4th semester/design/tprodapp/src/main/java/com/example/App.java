@@ -11,8 +11,6 @@ import com.example.controller.HomeController;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        ConnectDB db = new ConnectDB();
-        db.initDB();
         FXMLLoader fxmlLoader = new FXMLLoader(
                 App.class.getResource("primary.fxml"));
 

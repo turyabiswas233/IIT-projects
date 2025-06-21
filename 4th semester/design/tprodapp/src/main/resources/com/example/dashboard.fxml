@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #336699; -fx-padding: 10;">
+            <Label text="Product Inventory Dashboard" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" spacing="10">
+                <TextField fx:id="searchField" promptText="Search products..."/>
+                <Button text="Search"/>
+            </HBox>
+        </HBox>
+    </top>
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
+            <Button fx:id="productsButton" text="Products" prefWidth="150" style="-fx-font-size: 16px;"/>
+            <Button fx:id="categoriesButton" text="Categories" prefWidth="150" style="-fx-font-size: 16px;"/>
+            <Button fx:id="suppliersButton" text="Suppliers" prefWidth="150" style="-fx-font-size: 16px;"/>
+            <Button fx:id="reportsButton" text="Reports" prefWidth="150" style="-fx-font-size: 16px;"/>
+            <VBox VBox.vgrow="ALWAYS"/> <Button fx:id="settingsButton" text="Settings" prefWidth="150" style="-fx-font-size: 16px;"/>
+            <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" text="Logout" prefWidth="150" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="10" style="-fx-padding: 20;">
+            <Label text="Product List" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="addProductButton" text="Add New Product"/>
+                <Button fx:id="editProductButton" text="Edit Selected"/>
+                <Button fx:id="deleteProductButton" text="Delete Selected"/>
+            </HBox>
+            <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="Product ID" fx:id="idColumn">
+                        <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Name" fx:id="nameColumn">
+                        <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Category" fx:id="categoryColumn">
+                        <cellValueFactory><PropertyValueFactory property="category" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Price" fx:id="priceColumn">
+                        <cellValueFactory><PropertyValueFactory property="price" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Quantity" fx:id="quantityColumn">
+                        <cellValueFactory><PropertyValueFactory property="quantity" /></cellValueFactory>
+                    </TableColumn>
+                    </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
