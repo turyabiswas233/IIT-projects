@@ -1,58 +1,71 @@
 package com.example.controller;
 
-import com.example.App;
-import com.example.ConnectDB;
-
-import javafx.collections.ObservableList;
+import com.example.PageLoader;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-
-public class HomeController {
+public class HomeController implements Controller {
     private Stage stage;
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    @Override
+    public String getTitle() {
+        return "Tb Product Management";
+    }
+
     @FXML
     protected void onGotoLoginPageButtonClick() throws IOException {
         try {
-            AuthController authController = new AuthController();
-            authController.setStage(this.stage);
-
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    App.class.getResource("loginview.fxml"));
-            fxmlLoader.setController(authController);
-            Scene scene = new Scene(fxmlLoader.load());
+            LoginController loginController = new LoginController();
+            this.stage = loginController.setStage(this.stage);
+            Scene scene = new Scene(PageLoader.loadFXML("loginview", loginController));
             stage.setScene(scene);
-            stage.close();
-            stage.show();
 
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            stage.close();
+            stage.show();
         }
     }
 
     @FXML
-    private void onGotoDashboardButtonClick() throws IOException {
+    protected void onGotoSignupButtonClick() throws IOException {
         try {
-            ProductController productController = new ProductController(); 
-            productController.setStage(this.stage);
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    App.class.getResource("dashboard.fxml"));
-            fxmlLoader.setController(productController);
-            Scene scene = new Scene(fxmlLoader.load());
+            RegisterController registerController = new RegisterController();
+            this.stage = registerController.setStage(this.stage);
+            Scene scene = new Scene(PageLoader.loadFXML("signup", registerController));
             stage.setScene(scene);
+
+        } catch (Exception e) {
+            System.err.println("Error loading signup view: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
             stage.close();
             stage.show();
+        }
+    }
+
+    @FXML
+    protected void onGotoDashboardButtonClick() throws IOException {
+        try {
+            DashboardController productController = new DashboardController();
+            this.stage = productController.setStage(this.stage);
+            Scene scene = new Scene(PageLoader.loadFXML("dashboard", productController));
+            stage.setScene(scene);
+
         } catch (Exception e) {
             System.err.println("Error loading dashboard view: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            stage.close();
+            stage.show();
         }
     }
 }

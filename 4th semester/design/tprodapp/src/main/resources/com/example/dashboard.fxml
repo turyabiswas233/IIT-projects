@@ -40,7 +40,7 @@
         <VBox spacing="10" style="-fx-padding: 20;">
             <Label text="Product List" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Button fx:id="addProductButton" text="Add New Product"/>
+                <Button fx:id="addProductButtonPage" onAction="#onGotoAddProductButtonClick" text="Add New Product"/>
                 <Button fx:id="editProductButton" text="Edit Selected"/>
                 <Button fx:id="deleteProductButton" text="Delete Selected"/>
             </HBox>

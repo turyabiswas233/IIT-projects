@@ -11,32 +11,57 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <Label text="Welcome Back!">
-    <font>
-      <Font name="Arial Bold" size="24" />
-    </font>
-      <padding>
-         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-      </padding>
-  </Label>
+   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <children>
+       <Button fx:id="backButton" defaultButton="true" onAction="#onGotoHomePageButtonClick" style="-fx-background-color: #3f3f3f; -fx-background-radius: 500; -fx-text-fill: white;" text="⬅" textFill="#bf0f0f" />
+        <Label text="Welcome Back!">
+          <font>
+            <Font name="Inter SemiBold Italic" size="24.0" />
+          </font>
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </Label>
+      </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+   </HBox>
   <VBox alignment="CENTER_LEFT" maxWidth="463.0" prefHeight="148.0" prefWidth="463.0" spacing="10">
     <Label text="Username" />
-    <TextField fx:id="usernameField" promptText="Enter your username" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;" />
+    <TextField fx:id="usernameField" promptText="Enter your username" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding></TextField>
     <Label text="Password" />
-    <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-border-radius: 500px; -fx-pref-height: 32; -fx-background-radius: 500px;" />
+    <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-border-radius: 500px; -fx-pref-height: 32; -fx-background-radius: 500px;">
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding></PasswordField>
+     <HBox alignment="CENTER" maxWidth="455.0" prefHeight="63.0" prefWidth="0.0" spacing="10">
+       <Button fx:id="loginButton" onAction="#handleLogin" defaultButton="true" prefWidth="100.0" style="-fx-background-color: #4285f4; -fx-background-radius: 500; -fx-text-fill: white;" text="Login">
+            <padding>
+               <Insets bottom="10.0" top="10.0" />
+            </padding>
+            <font>
+               <Font name="Inter SemiBold" size="13.0" />
+            </font></Button>
+       <Button fx:id="cancelButton" onAction="#onCancelCloseApp" prefWidth="100.0" style="-fx-background-radius: 500;" text="Close">
+            <padding>
+               <Insets bottom="10.0" top="10.0" />
+            </padding>
+            <font>
+               <Font name="Inter Medium" size="13.0" />
+            </font></Button>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
+     </HBox>
       <padding>
          <Insets left="10.0" right="10.0" />
       </padding>
-  </VBox>
-  <HBox alignment="CENTER" maxWidth="250" spacing="10">
-    <Button fx:id="backButton" defaultButton="true" onAction="#onGotoHomePageButtonClick" style="-fx-background-color: #cf2f2f; -fx-background-radius: 500; -fx-text-fill: white;" text="Home" />
-    <Button fx:id="loginButton" defaultButton="true" style="-fx-background-color: #4285f4; -fx-background-radius: 500; -fx-text-fill: white;" text="Login" />
-    <Button fx:id="cancelButton" onAction="#onCancelCloseApp" style="-fx-background-radius: 500;" text="Close" />
-      <cursor>
-         <Cursor fx:constant="DEFAULT" />
-      </cursor>
-      <padding>
-         <Insets bottom="20.0" top="20.0" />
-      </padding>
-  </HBox>    
+  </VBox>    
 </VBox>

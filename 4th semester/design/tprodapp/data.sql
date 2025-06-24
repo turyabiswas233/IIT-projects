@@ -44,12 +44,6 @@ CREATE TABLE
         FOREIGN KEY (order_id) REFERENCES orders (id)
     );
 
--- insert some random data into all tables
-INSERT INTO
-    users (id, name, email)
-VALUES
-    (1, 'John Doe', 'john@gmail.com'),
-    (2, 'Jane Smith', 'jane@gmail.com');
 
 INSERT INTO
     products (id, name, price, category, quantity)
@@ -61,16 +55,4 @@ VALUES
     (5, 'Product E', 15.99, 'Sports', 150),
     (6, 'Product F', 5.99, 'Toys', 300),
     (7, 'Product G', 39.99, 'Beauty', 80);
-
-INSERT INTO
-    orders (user_id, order_date, status)
-VALUES
-    (1, '2023-10-01 10:00:00', 'shipped'),
-    (2, '2023-10-02 11:00:00', 'pending');
-
-INSERT INTO
-    order_items (order_id, product_name, quantity, price)
-VALUES
-    (1, 'Product A', 2, 19.99),
-    (1, 'Product B', 1, 9.99),
-    (2, 'Product C', 3, 29.99);
+s

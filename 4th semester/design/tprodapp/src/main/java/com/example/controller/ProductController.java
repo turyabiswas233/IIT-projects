@@ -2,87 +2,94 @@ package com.example.controller;
 
 import java.io.IOException;
 
-import com.example.App;
 import com.example.ConnectDB;
+import com.example.PageLoader;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class ProductController {
+public class ProductController implements Controller {
     private Stage stage;
+    private ConnectDB connectDB;
+    private ObservableList<Product> productData = FXCollections.observableArrayList();
 
-    public void setStage(Stage stage) {
+    @FXML
+    private TextField productNameField;
+    @FXML
+    private TextField productIdField;
+    @FXML
+    private TextField productCategoryField;
+    @FXML
+    private TextField productPriceField;
+    @FXML
+    private TextField productQuantityField;
+
+    public Stage setStage(Stage stage) {
         this.stage = stage;
+        stage.setTitle(getTitle());
+        return stage;
     }
 
-    @FXML
-    private TableView<Product> productTable;
-    @FXML
-    private TextField searchField;
-    @FXML
-    private Button addProductButton;
-    @FXML
-    private Button editProductButton;
-    @FXML
-    private Button deleteProductButton;
-
-    private ObservableList<Product> productData = FXCollections.observableArrayList();
+    @Override
+    public String getTitle() {
+        return "Tb Product Management - Add Product";
+    }
 
     @FXML
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
-        ConnectDB connectDB = new ConnectDB();
-        productData.addAll(connectDB.initDB());
-
-        productTable.setItems(productData);
-
-        // Add listeners for search, add, edit, delete buttons
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterProductList(newValue);
-        });
-
-        // Example for add product button
-        // addProductButton.setOnAction(event -> handleAddProduct());
+        connectDB = new ConnectDB();
+        connectDB.initDB();
+        productData.addAll(connectDB.getProducts());
     }
 
     @FXML
-    protected void onGotoLoginPageButtonClick() throws IOException {
-        try {
-            AuthController authController = new AuthController();
-            authController.setStage(this.stage);
+    protected String getText(TextField tf) {
+        return tf.getText();
+    }
 
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    App.class.getResource("loginview.fxml"));
-            fxmlLoader.setController(authController);
-            Scene scene = new Scene(fxmlLoader.load());
+    @FXML
+    protected int getNumber(TextField tf) {
+        try {
+            return Integer.parseInt(tf.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid number format: " + tf.getText());
+            return 0; // Default to 0 if invalid
+        }
+    }
+
+    @FXML
+    protected void onHandleProductAddClick() {
+        // You can open a new window or dialog to add product details
+        System.out.println("Add Product window opened successfully.");
+
+        Product newProduct = new Product(getText(productNameField),
+                getText(productCategoryField),
+                Double.parseDouble(getText(productPriceField)), Integer.parseInt(getText(productQuantityField)));
+
+        connectDB.uploadProduct(newProduct);
+    }
+
+    @FXML
+    protected void onGotoHomePageButtonClick() throws IOException {
+        try {
+            HomeController homeController = new HomeController();
+            homeController.setStage(this.stage);
+
+            Scene scene = new Scene(PageLoader.loadFXML("primary", homeController));
             stage.setScene(scene);
             stage.close();
             stage.show();
 
         } catch (Exception e) {
-            System.err.println("Error loading login view: " + e.getMessage());
+            System.err.println("Error loading home view: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private void filterProductList(String searchText) {
-        // Implement search logic here
-        // Filter productData and update productTable.setItems()
-        ObservableList<Product> filteredList = FXCollections.observableArrayList();
-        for (Product p : productData) {
-            if (p.getName().toLowerCase().contains(searchText.toLowerCase()) ||
-                    String.valueOf(p.getId()).contains(searchText)) { // Example: search by name or ID
-                filteredList.add(p);
-            }
-        }
-        productTable.setItems(filteredList);
     }
 
 }
