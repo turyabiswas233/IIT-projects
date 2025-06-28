@@ -16,7 +16,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.DashboardController"
+            >
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #336699; -fx-padding: 10;">
             <Label text="Product Inventory Dashboard" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>

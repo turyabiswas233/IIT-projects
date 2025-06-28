@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" spacing="20" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.LoginController">
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
       <children>
        <Button fx:id="backButton" defaultButton="true" onAction="#onGotoHomePageButtonClick" style="-fx-background-color: #3f3f3f; -fx-background-radius: 500; -fx-text-fill: white;" text="⬅" textFill="#bf0f0f" />

@@ -1,5 +1,7 @@
 package com.example.controller;
 
 public interface Controller {
-    public String getTitle();
+    public static String getTitle() {
+        return "Tb Product Management";
+    };
 }

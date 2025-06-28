@@ -2,20 +2,28 @@ package com.example.controller;
 
 import java.io.IOException;
 
+import com.example.App;
 import com.example.ConnectDB;
-import com.example.PageLoader;
+import com.example.models.Product;
+import com.example.utils.ProductFactory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 public class ProductController implements Controller {
-    private Stage stage;
-    private ConnectDB connectDB;
+
+    private ProductFactory productFactory = new ProductFactory();
+
+    final ConnectDB db = new ConnectDB();
+     
+    @FXML
+    private Button addProductButton;
+
+    @FXML
+    private Button backHome;
+
     private ObservableList<Product> productData = FXCollections.observableArrayList();
 
     @FXML
@@ -23,34 +31,38 @@ public class ProductController implements Controller {
     @FXML
     private TextField productIdField;
     @FXML
-    private TextField productCategoryField;
+    private ComboBox<String> productCategoryField;
     @FXML
     private TextField productPriceField;
     @FXML
     private TextField productQuantityField;
 
-    public Stage setStage(Stage stage) {
-        this.stage = stage;
-        stage.setTitle(getTitle());
-        return stage;
-    }
-
-    @Override
-    public String getTitle() {
+    public static String getTitle() {
         return "Tb Product Management - Add Product";
     }
 
     @FXML
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
-        connectDB = new ConnectDB();
-        connectDB.initDB();
-        productData.addAll(connectDB.getProducts());
+        productData.addAll(productFactory.getProducts());
+        productData.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+
+        productData.forEach(e -> {
+            productCategoryField.getItems().add(e.getCategory());
+        });
+        productCategoryField.getItems().add("Other");
+        productCategoryField.getSelectionModel().selectFirst();
+        productIdField.setText(String.valueOf(productFactory.getNextProductId()));
     }
 
-    @FXML
-    protected String getText(TextField tf) {
-        return tf.getText();
+    protected <T> String getText(T tf) {
+        if (tf instanceof TextField) {
+            return ((TextField) tf).getText();
+        }
+        else if(tf instanceof ComboBox){
+            return ((ComboBox<?>) tf).getSelectionModel().getSelectedItem().toString();
+        }
+        return null;
     }
 
     @FXML
@@ -65,6 +77,8 @@ public class ProductController implements Controller {
 
     @FXML
     protected void onHandleProductAddClick() {
+        addProductButton.setDisable(true);
+        addProductButton.setText("Please wait...");
         // You can open a new window or dialog to add product details
         System.out.println("Add Product window opened successfully.");
 
@@ -72,19 +86,30 @@ public class ProductController implements Controller {
                 getText(productCategoryField),
                 Double.parseDouble(getText(productPriceField)), Integer.parseInt(getText(productQuantityField)));
 
-        connectDB.uploadProduct(newProduct);
+        try {
+            if (productFactory.uploadProduct(newProduct)) {
+                System.out.println("Product added successfully.");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Product Added Successfully");
+                alert.setContentText("Product " + newProduct.getName() + " has been added successfully.");
+                alert.showAndWait();
+                App.setRoot("dashboard", DashboardController.getTitle());
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error adding product: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            addProductButton.setDisable(false);
+            addProductButton.setText("Add Product");
+        }
     }
 
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
         try {
-            HomeController homeController = new HomeController();
-            homeController.setStage(this.stage);
-
-            Scene scene = new Scene(PageLoader.loadFXML("primary", homeController));
-            stage.setScene(scene);
-            stage.close();
-            stage.show();
+            App.setRoot("primary", HomeController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading home view: " + e.getMessage());

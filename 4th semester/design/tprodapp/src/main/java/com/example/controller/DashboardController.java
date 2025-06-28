@@ -2,23 +2,44 @@ package com.example.controller;
 
 import java.io.IOException;
 
-import com.example.ConnectDB;
-import com.example.PageLoader;
+import com.example.App;
+import com.example.models.Product;
+import com.example.utils.ProductFactory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
 public class DashboardController implements Controller {
-    private Stage stage;
-    private ConnectDB connectDB;
-    private ObservableList<Product> productData = FXCollections.observableArrayList();
 
+    private ObservableList<Product> productData = FXCollections.observableArrayList();
+    private ProductFactory productFactory = new ProductFactory();
+
+    @FXML
+    private Button productsButton;
+    @FXML
+    private Button categoriesButton;
+    @FXML
+    private Button suppliersButton;
+    @FXML
+    private Button reportsButton;
+    @FXML
+    private Button settingsButton;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Button addProductButtonPage;
+    @FXML
+    private TableColumn<Product, Integer> idColumn;
+    @FXML
+    private TableColumn<Product, String> nameColumn;
+    @FXML
+    private TableColumn<Product, String> categoryColumn;
+    @FXML
+    private TableColumn<Product, Double> priceColumn;
+    @FXML
+    private TableColumn<Product, Integer> quantityColumn;
     @FXML
     private TableView<Product> productTable;
     @FXML
@@ -28,41 +49,49 @@ public class DashboardController implements Controller {
     @FXML
     private Button deleteProductButton;
 
-    public Stage setStage(Stage stage) {
-        this.stage = stage;
-        stage.setTitle(getTitle());
-        return stage;
-    }
-
-    @Override
-    public String getTitle() {
+    public static String getTitle() {
         return "Tb Product Management - Dashboard";
     }
 
     @FXML
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
-        connectDB = new ConnectDB();
-        connectDB.initDB();
-        productData.addAll(connectDB.getProducts());
+
+        productData.addAll(productFactory.getProducts(true));
         productTable.setItems(productData);
 
         // Add listeners for search, add, edit, delete buttons
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterProductList(newValue);
         });
+
+        // set an event on click an item from the table
+        productTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 0) {
+                Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+                if (selectedProduct != null) {
+                    System.out.println(
+                            "Selected Product: " + selectedProduct.getName() + ", ID: " + selectedProduct.getId());
+                }
+            }
+        });
+
+        // make event for deleting a product
+        deleteProductButton.setOnAction(e -> {
+            if (productFactory.deleteProductById(productTable.getSelectionModel().getSelectedItem().getId())) {
+                System.out.println("Product deleted successfully.");
+                productData.setAll(productFactory.getProducts());
+            } else {
+                System.err.println("Failed to delete product.");
+            }
+        });
     }
 
     @FXML
     protected void onGotoLoginPageButtonClick() throws IOException {
         try {
-            LoginController loginController = new LoginController();
-            loginController.setStage(this.stage);
 
-            Scene scene = new Scene(PageLoader.loadFXML("loginview", loginController));
-            stage.setScene(scene);
-            stage.close();
-            stage.show();
+            App.setRoot("loginview");
 
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
@@ -73,12 +102,8 @@ public class DashboardController implements Controller {
     @FXML
     protected void onGotoAddProductButtonClick() throws IOException {
         try {
-            ProductController productController = new ProductController();
-            stage = productController.setStage(this.stage);
-            Scene scene = new Scene(PageLoader.loadFXML("addproduct", productController));
-            stage.setScene(scene);
-            stage.close();
-            stage.show();
+
+            App.setRoot("addproduct");
 
         } catch (Exception e) {
             System.err.println("Error loading add product view: " + e.getMessage());

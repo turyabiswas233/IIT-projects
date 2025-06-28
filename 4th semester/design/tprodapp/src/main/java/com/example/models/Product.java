@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.models;
 
 import javafx.beans.property.*;
 
@@ -78,4 +78,7 @@ public class Product {
     public IntegerProperty quantityProperty() {
         return quantity;
     }
+
+
+    
 }

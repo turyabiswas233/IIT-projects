@@ -1,42 +1,38 @@
 package com.example.controller;
 
-import com.example.PageLoader;
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.mindrot.jbcrypt.BCrypt;
 import java.io.IOException;
 
+import com.example.App; 
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
 public class LoginController implements Controller {
-    private Stage stage;
-    @FXML private TextField usernameField = new TextField();
-    @FXML private PasswordField passwordField = new PasswordField();
+    @FXML
+    private Button backButton;
 
-    public Stage setStage(Stage stage) {
-        this.stage = stage;
-        stage.setTitle(getTitle());
+    @FXML
+    private TextField usernameField;
 
-        return stage;
-    }
+    @FXML
+    private PasswordField passwordField;
 
-    @Override
-    public String getTitle() {
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private Button cancelButton;
+
+    public static String getTitle() {
         return "Tb Product Management - Login";
     }
 
     @FXML
     protected void handleLogin() throws IOException {
-        System.out.println(getUserName());
-        System.out.println(hashPassString(getPassword()));
-         
-    }
+        final String username = getUserName();
+        final String password = AuthController.hashPasswordString(getPassword());
 
-    private  String hashPassString(String password) {
-        // Use a fixed salt so the same password always produces the same hash
-        String fixedSalt = BCrypt.gensalt();
-        return BCrypt.hashpw(password, fixedSalt);
+        System.out.println(username + password);
+
     }
 
     private String getUserName() {
@@ -49,18 +45,12 @@ public class LoginController implements Controller {
 
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
-        HomeController homeController = new HomeController();
-        homeController.setStage(this.stage);
-
-        Scene scene = new Scene(PageLoader.loadFXML("primary", homeController));
-        stage.setScene(scene);
-        stage.close();
-        stage.show();
+        App.setRoot("primary", getTitle());
     }
 
     @FXML
     private void onCancelCloseApp() throws IOException {
-        stage.close();
+        App.closeApp();
         System.out.println("Exiting app...");
     }
 }

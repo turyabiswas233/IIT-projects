@@ -1,41 +1,36 @@
-drop table if exists order_items;
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
 
-drop table if exists orders;
-
-drop table if exists users;
-
-drop table if exists products;
-
-CREATE TABLE
-    users (
+CREATE TABLE users (
         id required SERIAL AUTO PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(100) NOT NULL,
+        role VARCHAR(10) NOT NULL
     );
-
--- create order table
-CREATE TABLE
-    orders (
+CREATE TABLE orders (
         id SERIAL PRIMARY KEY,
         user_id INT NOT NULL,
         order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(50) NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users (id)
     );
-
--- create products table
-CREATE TABLE
-    products (
+CREATE TABLE products (
         id SERIAL PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         price DECIMAL(10, 2) NOT NULL,
         category VARCHAR(100),
         quantity INT NOT NULL
     );
-
--- create order_items table
-CREATE TABLE
-    order_items (
+INSERT INTO products VALUES(1,'Product B',9.9900000000000002131,'Books',50);
+INSERT INTO products VALUES(2,'Product C',29.989999999999998436,'Clothing',200);
+INSERT INTO products VALUES(3,'Product D',49.99000000000000199,'Home & Kitchen',75);
+INSERT INTO products VALUES(4,'Product E',15.990000000000000213,'Sports',150);
+INSERT INTO products VALUES(5,'Product F',5.9900000000000002131,'Toys',300);
+INSERT INTO products VALUES(6,'Pokemon Ball',250,'Toys',300);
+CREATE TABLE order_items (
         id SERIAL PRIMARY KEY,
         order_id INT NOT NULL,
         product_name VARCHAR(100) NOT NULL,
@@ -43,16 +38,3 @@ CREATE TABLE
         price DECIMAL(10, 2) NOT NULL,
         FOREIGN KEY (order_id) REFERENCES orders (id)
     );
-
-
-INSERT INTO
-    products (id, name, price, category, quantity)
-VALUES
-    (1, 'Product A', 19.99, 'Electronics', 100),
-    (2, 'Product B', 9.99, 'Books', 50),
-    (3, 'Product C', 29.99, 'Clothing', 200),
-    (4, 'Product D', 49.99, 'Home & Kitchen', 75),
-    (5, 'Product E', 15.99, 'Sports', 150),
-    (6, 'Product F', 5.99, 'Toys', 300),
-    (7, 'Product G', 39.99, 'Beauty', 80);
-s

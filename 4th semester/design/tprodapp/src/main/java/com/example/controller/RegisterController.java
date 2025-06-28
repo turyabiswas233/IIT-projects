@@ -2,47 +2,77 @@ package com.example.controller;
 
 import java.io.IOException;
 
-import com.example.PageLoader;
+import com.example.App;
+import com.example.models.User;
+import com.example.utils.UserFactory;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 public class RegisterController implements Controller {
+    @FXML
+    private Button backButton;
 
-    private Stage stage;
+    @FXML
+    private TextField fullNameField;
 
-    public Stage setStage(Stage stage) {
-        this.stage = stage;
-        stage.setTitle(getTitle());
+    @FXML
+    private TextField emailField;
 
-        return stage;
-    }
+    @FXML
+    private PasswordField passwordField;
 
-    @Override
-    public String getTitle() {
+    @FXML
+    private ComboBox<String> adminTypeComboBox;
+
+    @FXML
+    private Button signupButton;
+
+    @FXML
+    private Button cancelButton;
+
+    public static String getTitle() {
         return "Tb Product Management - Register";
     }
 
     @FXML
-    protected void onGotoHomePageButtonClick() throws IOException {
-        HomeController homeController = new HomeController();
-        homeController.setStage(this.stage);
+    private void initialize() {
+        // Initialize the admin type combo box with options
+        adminTypeComboBox.getItems().clear();
+        adminTypeComboBox.getItems().addAll("Super Admin", "Admin", "User");
+        adminTypeComboBox.getSelectionModel().selectFirst(); // Default selection
+    }
 
-        Scene scene = new Scene(PageLoader.loadFXML("primary", homeController));
-        stage.setScene(scene);
-        stage.close();
-        stage.show();
+    @FXML
+    protected void onGotoHomePageButtonClick() throws IOException {
+        App.setRoot("primary", LoginController.getTitle());
     }
 
     @FXML
     protected void handleSignup() {
-        System.out.println("Signup button clicked");
+        signupButton.setDisable(true);
+        signupButton.setText("Signing Up...");
+        try {
+            User user = new User(
+                    fullNameField.getText(),
+                    emailField.getText(),
+                    AuthController.hashPasswordString(passwordField.getText()),
+                    adminTypeComboBox.getValue());
+            UserFactory.getInstance().addUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error during registration: " + e.getMessage(),
+                    ButtonType.OK);
+            alert.showAndWait();
+        } finally {
+            signupButton.setDisable(false);
+            signupButton.setText("Sign Up");
+        }
     }
 
     @FXML
     protected void onCancelCloseApp() {
-        stage.close();
         System.out.println("Exiting app...");
+        App.closeApp();
     }
 }
