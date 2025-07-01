@@ -45,7 +45,7 @@ public class RegisterController implements Controller {
 
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
-        App.setRoot("primary", LoginController.getTitle());
+        App.setRoot("primarypage", HomeController.getTitle());
     }
 
     @FXML
@@ -58,7 +58,15 @@ public class RegisterController implements Controller {
                     emailField.getText(),
                     AuthController.hashPasswordString(passwordField.getText()),
                     adminTypeComboBox.getValue());
-            UserFactory.getInstance().addUser(user);
+            if(UserFactory.getInstance().addUser(user)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Registration Successful");
+                alert.setContentText("Username: " + user.getEmail() + "\n");
+                alert.showAndWait();
+                App.setRoot("loginpage", DashboardController.getTitle());
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error during registration: " + e.getMessage(),

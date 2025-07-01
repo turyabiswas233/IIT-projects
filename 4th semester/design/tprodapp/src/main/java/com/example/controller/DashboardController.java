@@ -12,18 +12,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class DashboardController implements Controller {
-
     private ObservableList<Product> productData = FXCollections.observableArrayList();
     private ProductFactory productFactory = new ProductFactory();
 
     @FXML
+    private Button ordersButton;
+    @FXML
+    private Button usersButton;
+    @FXML
     private Button productsButton;
     @FXML
     private Button categoriesButton;
-    @FXML
-    private Button suppliersButton;
-    @FXML
-    private Button reportsButton;
     @FXML
     private Button settingsButton;
     @FXML
@@ -90,8 +89,18 @@ public class DashboardController implements Controller {
     @FXML
     protected void onGotoLoginPageButtonClick() throws IOException {
         try {
+            App.setRoot("loginpage", LoginController.getTitle());
+        } catch (Exception e) {
+            System.err.println("Error loading login view: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-            App.setRoot("loginview");
+    @FXML
+    protected void onClickShowUsers() throws IOException {
+        try {
+
+            App.setRoot("userspage", UsersController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
@@ -103,7 +112,7 @@ public class DashboardController implements Controller {
     protected void onGotoAddProductButtonClick() throws IOException {
         try {
 
-            App.setRoot("addproduct");
+            App.setRoot("addproductpage");
 
         } catch (Exception e) {
             System.err.println("Error loading add product view: " + e.getMessage());
@@ -116,8 +125,7 @@ public class DashboardController implements Controller {
         for (Product p : productData) {
             if (p.getName().toLowerCase().contains(searchText.toLowerCase()) ||
                     String.valueOf(p.getId()).contains(searchText)
-                    || p.getCategory().toLowerCase().contains(searchText.toLowerCase())) { // Example: search by name or
-                                                                                           // ID or Category
+                    || p.getCategory().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(p);
             }
         }

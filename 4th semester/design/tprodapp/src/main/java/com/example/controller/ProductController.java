@@ -94,7 +94,7 @@ public class ProductController implements Controller {
                 alert.setHeaderText("Product Added Successfully");
                 alert.setContentText("Product " + newProduct.getName() + " has been added successfully.");
                 alert.showAndWait();
-                App.setRoot("dashboard", DashboardController.getTitle());
+                App.setRoot("dashboardpage", DashboardController.getTitle());
             }
 
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class ProductController implements Controller {
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
         try {
-            App.setRoot("primary", HomeController.getTitle());
+            App.setRoot("primarypage", HomeController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading home view: " + e.getMessage());

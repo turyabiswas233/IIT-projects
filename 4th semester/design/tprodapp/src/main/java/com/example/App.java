@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         App.stage = stage;
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("primarypage"));
         stage.setTitle(HomeController.getTitle());
         stage.setScene(scene);
         stage.setWidth(800);

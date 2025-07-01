@@ -28,8 +28,8 @@
       </opaqueInsets>
    </HBox>
   <VBox alignment="CENTER_LEFT" maxWidth="463.0" prefHeight="148.0" prefWidth="463.0" spacing="10">
-    <Label text="Username" />
-    <TextField fx:id="usernameField" promptText="Enter your username" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
+    <Label text="Email" />
+    <TextField fx:id="usernameField" promptText="Enter your email" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
          <padding>
             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
          </padding></TextField>
@@ -39,7 +39,7 @@
             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
          </padding></PasswordField>
      <HBox alignment="CENTER" maxWidth="455.0" prefHeight="63.0" prefWidth="0.0" spacing="10">
-       <Button fx:id="loginButton" onAction="#handleLogin" defaultButton="true" prefWidth="100.0" style="-fx-background-color: #4285f4; -fx-background-radius: 500; -fx-text-fill: white;" text="Login">
+       <Button fx:id="loginButton" defaultButton="true" onAction="#handleLogin" prefWidth="100.0" style="-fx-background-color: #4285f4; -fx-background-radius: 500; -fx-text-fill: white;" text="Login">
             <padding>
                <Insets bottom="10.0" top="10.0" />
             </padding>

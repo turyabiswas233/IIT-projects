@@ -28,7 +28,7 @@ public class HomeController implements Controller {
     @FXML
     protected void onGotoLoginPageButtonClick() throws IOException {
         try {
-            App.setRoot("loginview");
+            App.setRoot("loginpage", LoginController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
@@ -40,7 +40,7 @@ public class HomeController implements Controller {
     protected void onGotoSignupButtonClick() throws IOException {
         try {
 
-            App.setRoot("signup");
+            App.setRoot("registrationpage", RegisterController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading signup view: " + e.getMessage());
@@ -51,7 +51,7 @@ public class HomeController implements Controller {
     @FXML
     protected void onGotoDashboardButtonClick() throws IOException {
         try {
-            App.setRoot("dashboard", getTitle());
+            App.setRoot("dashboardpage", DashboardController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading dashboard view: " + e.getMessage());

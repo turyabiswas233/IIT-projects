@@ -2,7 +2,9 @@ package com.example.controller;
 
 import java.io.IOException;
 
-import com.example.App; 
+import com.example.App;
+import com.example.utils.UserFactory;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -29,9 +31,28 @@ public class LoginController implements Controller {
     @FXML
     protected void handleLogin() throws IOException {
         final String username = getUserName();
-        final String password = AuthController.hashPasswordString(getPassword());
+        final String password = getPassword();
+        try {
 
-        System.out.println(username + password);
+            if (UserFactory.getInstance().hasUser(username, password)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login Status");
+                alert.setHeaderText("Login Successful");
+                alert.setContentText("email: " + username + "\n");
+                alert.showAndWait();
+                App.setRoot("dashboardpage", DashboardController.getTitle());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+                    alert.setTitle("Login Status");
+                    alert.setContentText("Error: wrong email or password ["+ username+", "+password+"]");
+                    alert.setHeaderText("Login Failed");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error during login: " + e.getMessage(),
+                    ButtonType.OK);
+            alert.showAndWait();
+        }
 
     }
 
@@ -45,7 +66,7 @@ public class LoginController implements Controller {
 
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
-        App.setRoot("primary", getTitle());
+        App.setRoot("primarypage", HomeController.getTitle());
     }
 
     @FXML

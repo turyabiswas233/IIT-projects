@@ -105,13 +105,13 @@ public class ProductFactory {
                     ConnectDB.initDB();
                 }
             }
-            String sql = "INSERT INTO products (id, name, category, price, quantity) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO products (name, category, price, quantity) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql);
-            pstmt.setInt(1, getNextProductId()); // Use the next product ID
-            pstmt.setString(2, product.getName());
-            pstmt.setString(3, product.getCategory());
-            pstmt.setDouble(4, product.getPrice());
-            pstmt.setInt(5, product.getQuantity());
+            // pstmt.setInt(1, getNextProductId()); // Use the next product ID
+            pstmt.setString(1, product.getName());
+            pstmt.setString(2, product.getCategory());
+            pstmt.setDouble(3, product.getPrice());
+            pstmt.setInt(4, product.getQuantity());
 
             if (pstmt.executeUpdate() > 0) {
                 product = new Product(

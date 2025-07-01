@@ -4,7 +4,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class AuthController {
      public static String hashPasswordString(String password) {
-        String fixedSalt = BCrypt.gensalt();
-        return BCrypt.hashpw(password, fixedSalt);
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public static boolean checkPasswordString(String password, String hashPw) {
+        return BCrypt.checkpw(password, hashPw);
     }
 }

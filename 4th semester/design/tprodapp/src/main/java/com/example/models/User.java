@@ -25,23 +25,44 @@ public class User {
         this.role = new SimpleStringProperty(role);
     }
 
-    public IntegerProperty getId() {
-        return id;
+    
+    
+    public int getId() {
+        return id.get();
     }
 
-    public StringProperty getName() {
+    public String getName() {
+        return name.get();
+    }
+
+    public String getEmail() {
+        return email.get();
+    }
+
+    public String getPassword() {
+        return password.get();
+    }
+
+    public String getRole() {
+        return role.get();
+    }
+
+    public IntegerProperty getIdProperty() {
+        return id;
+    }
+    public StringProperty getNameProperty() {
         return name;
     }
 
-    public StringProperty getEmail() {
+    public StringProperty getEmailProperty() {
         return email;
     }
 
-    public StringProperty getPassword() {
+    public StringProperty getPasswordProperty() {
         return password;
     }
 
-    public StringProperty getRole() {
+    public StringProperty getRoleProperty() {
         return role;
     }   
 }
