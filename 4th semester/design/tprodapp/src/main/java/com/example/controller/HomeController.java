@@ -17,9 +17,6 @@ public class HomeController implements Controller {
     @FXML
     private Button signUp;
 
-    @FXML
-    private Button dashboardButton;
-
 
     public static String getTitle() {
         return "Tb Product Management";
@@ -48,14 +45,5 @@ public class HomeController implements Controller {
         }
     }
 
-    @FXML
-    protected void onGotoDashboardButtonClick() throws IOException {
-        try {
-            App.setRoot("dashboardpage", DashboardController.getTitle());
-
-        } catch (Exception e) {
-            System.err.println("Error loading dashboard view: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+  
 }

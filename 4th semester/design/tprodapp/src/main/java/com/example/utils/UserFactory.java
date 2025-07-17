@@ -47,10 +47,10 @@ public class UserFactory {
     public boolean addUser(User user) {
         String query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = ConnectDB.getConnection().prepareStatement(query)) {
-            statement.setString(1, user.getName().get());
-            statement.setString(2, user.getEmail().get());
-            statement.setString(3, user.getPassword().get());
-            statement.setString(4, user.getRole().get());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getRole());
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 users.add(user);
@@ -65,7 +65,7 @@ public class UserFactory {
     
     public User getUser(String email) {
         for (User user : users) {
-            if (user.getEmail().get().equals(email)) {
+            if (user.getEmail().equals(email)) {
                 return user;
             }
         }
@@ -73,9 +73,13 @@ public class UserFactory {
     }
     
     public boolean hasUser(String email, String password) {
+        loadUsers();
         for (User user : users) {
-            if (user.getEmail().get().equals(email)) {
-                String dbPass = user.getPassword().getValue();
+            if (user.getEmail().equals(email)) {
+                String dbPass = user.getPassword();
+                System.out.println(dbPass);
+                System.out.println(password);
+
                 return AuthController.checkPasswordString(password, dbPass);
             }
         }
@@ -95,7 +99,7 @@ public class UserFactory {
             pstmt.setInt(1, id);
             if (pstmt.executeUpdate() > 0) {
                 System.out.println("Product with ID " + id + " deleted successfully.");
-                users.removeIf(p -> p.getId().getValue() == id); // Remove from cache
+                users.removeIf(p -> p.getId() == id); // Remove from cache
                 isSuccess = true;
             } else {
                 System.err.println("Failed to delete product with ID: " + id);

@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.IOException;
 
 import com.example.App;
+import com.example.controller.admin.DashboardController;
 import com.example.models.User;
 import com.example.utils.UserFactory;
 
@@ -56,9 +57,9 @@ public class RegisterController implements Controller {
             User user = new User(
                     fullNameField.getText(),
                     emailField.getText(),
-                    AuthController.hashPasswordString(passwordField.getText()),
+                    passwordField.getText(),
                     adminTypeComboBox.getValue());
-            if(UserFactory.getInstance().addUser(user)){
+            if (UserFactory.getInstance().addUser(user)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText("Registration Successful");

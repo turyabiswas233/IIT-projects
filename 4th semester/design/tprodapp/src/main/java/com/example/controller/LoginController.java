@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.IOException;
 
 import com.example.App;
+import com.example.controller.admin.DashboardController;
 import com.example.utils.UserFactory;
 
 import javafx.fxml.FXML;
@@ -35,20 +36,25 @@ public class LoginController implements Controller {
         try {
 
             if (UserFactory.getInstance().hasUser(username, password)) {
+                String role = UserFactory.getInstance().getUser(username).getRole();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login Status");
                 alert.setHeaderText("Login Successful");
-                alert.setContentText("email: " + username + "\n");
+                alert.setContentText("Email: " + username + "\nRole: " + role + "\n");
                 alert.showAndWait();
-                App.setRoot("dashboardpage", DashboardController.getTitle());
+                if (role.equalsIgnoreCase("super admin"))
+                    App.setRoot("admin/dashboardpage", DashboardController.getTitle());
+                else if (role.equalsIgnoreCase("user"))
+                    App.setRoot("users/dashboardpage", DashboardController.getTitle());
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
-                    alert.setTitle("Login Status");
-                    alert.setContentText("Error: wrong email or password ["+ username+", "+password+"]");
-                    alert.setHeaderText("Login Failed");
+                alert.setTitle("Login Status");
+                alert.setContentText("Error: wrong email or password [" + username + "]");
+                alert.setHeaderText("Login Failed");
                 alert.showAndWait();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error during login: " + e.getMessage(),
                     ButtonType.OK);
             alert.showAndWait();

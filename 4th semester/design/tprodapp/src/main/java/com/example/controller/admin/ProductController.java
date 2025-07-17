@@ -1,9 +1,11 @@
-package com.example.controller;
+package com.example.controller.admin;
 
 import java.io.IOException;
 
 import com.example.App;
 import com.example.ConnectDB;
+import com.example.controller.Controller;
+import com.example.controller.HomeController;
 import com.example.models.Product;
 import com.example.utils.ProductFactory;
 
@@ -94,7 +96,7 @@ public class ProductController implements Controller {
                 alert.setHeaderText("Product Added Successfully");
                 alert.setContentText("Product " + newProduct.getName() + " has been added successfully.");
                 alert.showAndWait();
-                App.setRoot("dashboardpage", DashboardController.getTitle());
+                App.setRoot("admin/dashboardpage", DashboardController.getTitle());
             }
 
         } catch (Exception e) {
@@ -109,7 +111,7 @@ public class ProductController implements Controller {
     @FXML
     protected void onGotoHomePageButtonClick() throws IOException {
         try {
-            App.setRoot("primarypage", HomeController.getTitle());
+            App.setRoot("admin/dashboardpage", HomeController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading home view: " + e.getMessage());

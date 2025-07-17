@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.UsersController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.admin.UsersController">
   <top>
     <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #336699; -fx-padding: 10;">
-      <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Inventory Dashboard" />
+      <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Inventory Dashboard - Employee" />
       <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
         <TextField fx:id="searchField" promptText="Search users..." />
         <Button text="Search" />
@@ -26,9 +26,8 @@
       <Button fx:id="productsButton" prefWidth="150" style="-fx-font-size: 16px;" text="Products" />
       <Button fx:id="categoriesButton" prefWidth="150" style="-fx-font-size: 16px;" text="Categories" />
       <Button fx:id="ordersButton" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
-      <Button fx:id="usersButton" onAction="#onClickShowUsers" prefWidth="150" style="-fx-font-size: 16px;" text="Users" />
+      <Button fx:id="customersButton" onAction="#onClickShowCustomers" text="Users" prefWidth="150" style="-fx-font-size: 16px;"/>
       <VBox VBox.vgrow="ALWAYS" />
-      <Button fx:id="settingsButton" prefWidth="150" style="-fx-font-size: 16px;" text="Settings" />
       <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Logout" />
     </VBox>
   </left>
@@ -36,10 +35,6 @@
   <center>
     <VBox spacing="10" style="-fx-padding: 20;">
       <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Users List" />
-      <HBox alignment="CENTER_LEFT" spacing="10">
-        <Button fx:id="editUserButton" text="Edit Selected" />
-        <Button fx:id="deleteUserButton" text="Delete Selected" />
-      </HBox>
       <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="idColumn" text="User ID">

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.admin.DashboardController">
+  <top>
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #336699; -fx-padding: 10;">
+      <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Inventory Dashboard - Admin" />
+      <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
+        <TextField fx:id="searchField" promptText="Search products..." />
+        <Button text="Search" />
+      </HBox>
+    </HBox>
+  </top>
+
+  <left>
+    <VBox spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
+      <Button fx:id="productsButton" prefWidth="150" style="-fx-font-size: 16px;" text="Products" />
+      <Button fx:id="categoriesButton" prefWidth="150" style="-fx-font-size: 16px;" text="Categories" />
+      <Button fx:id="ordersButton" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
+      <Button fx:id="usersButton" onAction="#onClickShowUsers" prefWidth="150" style="-fx-font-size: 16px;" text="Users" />
+      <VBox VBox.vgrow="ALWAYS" />
+      <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Logout" />
+    </VBox>
+  </left>
+
+  <center>
+    <VBox spacing="10" style="-fx-padding: 20;">
+      <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Product List" />
+      <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="addProductButtonPage" onAction="#onGotoAddProductButtonClick" text="Add New Product"/>
+        <Button fx:id="editProductButton" text="Edit Selected"/>
+        <Button fx:id="deleteProductButton" text="Delete Selected"/>
+      </HBox>
+      <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="idColumn" text="Product ID">
+            <cellValueFactory>
+              <PropertyValueFactory property="id" />
+            </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="nameColumn" text="Name">
+            <cellValueFactory>
+              <PropertyValueFactory property="name" />
+            </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="categoryColumn" text="Category">
+            <cellValueFactory>
+              <PropertyValueFactory property="category" />
+            </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="priceColumn" text="Price">
+            <cellValueFactory>
+              <PropertyValueFactory property="price" />
+            </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="quantityColumn" text="Quantity">
+            <cellValueFactory>
+              <PropertyValueFactory property="quantity" />
+            </cellValueFactory>
+          </TableColumn>
+        </columns>
+      </TableView>
+    </VBox>
+  </center>
+</BorderPane>

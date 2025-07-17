@@ -1,8 +1,10 @@
-package com.example.controller;
+package com.example.controller.admin;
 
 import java.io.IOException;
 
 import com.example.App;
+import com.example.controller.Controller;
+import com.example.controller.LoginController;
 import com.example.models.Product;
 import com.example.utils.ProductFactory;
 
@@ -23,8 +25,6 @@ public class DashboardController implements Controller {
     private Button productsButton;
     @FXML
     private Button categoriesButton;
-    @FXML
-    private Button settingsButton;
     @FXML
     private Button logoutButton;
     @FXML
@@ -75,6 +75,15 @@ public class DashboardController implements Controller {
             }
         });
 
+        productsButton.setOnAction(e -> {
+            try {
+                App.setRoot("admin/dashboardpage", DashboardController.getTitle());
+            } catch (Exception err) {
+                System.err.println(err.getLocalizedMessage());
+                err.printStackTrace();
+            }
+        });
+
         // make event for deleting a product
         deleteProductButton.setOnAction(e -> {
             if (productFactory.deleteProductById(productTable.getSelectionModel().getSelectedItem().getId())) {
@@ -100,7 +109,7 @@ public class DashboardController implements Controller {
     protected void onClickShowUsers() throws IOException {
         try {
 
-            App.setRoot("userspage", UsersController.getTitle());
+            App.setRoot("admin/userspage", UsersController.getTitle());
 
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
@@ -112,7 +121,7 @@ public class DashboardController implements Controller {
     protected void onGotoAddProductButtonClick() throws IOException {
         try {
 
-            App.setRoot("addproductpage");
+            App.setRoot("admin/addproductpage");
 
         } catch (Exception e) {
             System.err.println("Error loading add product view: " + e.getMessage());

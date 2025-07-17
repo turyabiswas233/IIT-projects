@@ -8,8 +8,14 @@ module com.example {
     exports com.example;
 
     opens com.example.controller to javafx.fxml;
+    opens com.example.controller.admin to javafx.fxml;
+    opens com.example.controller.users to javafx.fxml;
     opens com.example.models to javafx.fxml;
+    opens com.example.utils to javafx.fxml;
 
     exports com.example.controller;
+    exports com.example.controller.admin;
+    exports com.example.controller.users;
     exports com.example.models;
+    exports com.example.utils;
 }

@@ -10,58 +10,76 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.LoginController">
+<VBox alignment="CENTER" spacing="20" style="-fx-background-color: linear-gradient(to bottom right, #232526, #414345); -fx-effect: dropshadow(gaussian, #00000088, 40, 0.2, 0, 8);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.LoginController">
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
       <children>
-       <Button fx:id="backButton" defaultButton="true" onAction="#onGotoHomePageButtonClick" style="-fx-background-color: #3f3f3f; -fx-background-radius: 500; -fx-text-fill: white;" text="⬅" textFill="#bf0f0f" />
+        <Button fx:id="backButton" defaultButton="true" onAction="#onGotoHomePageButtonClick"
+                style="-fx-background-color: rgba(30,30,30,0.5); -fx-background-radius: 50; -fx-text-fill: #b3b3b3; -fx-border-color: #444; -fx-border-radius: 50; -fx-border-width: 1;"
+                text="⬅" textFill="#b3b3b3" />
         <Label text="Welcome Back!">
           <font>
             <Font name="Inter SemiBold Italic" size="24.0" />
           </font>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+          <style>
+            -fx-text-fill: #ffffffcc;
+            -fx-effect: dropshadow(gaussian, #00000099, 8, 0.2, 0, 2);
+          </style>
         </Label>
       </children>
       <opaqueInsets>
          <Insets />
       </opaqueInsets>
    </HBox>
-  <VBox alignment="CENTER_LEFT" maxWidth="463.0" prefHeight="148.0" prefWidth="463.0" spacing="10">
-    <Label text="Email" />
-    <TextField fx:id="usernameField" promptText="Enter your email" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
-         <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-         </padding></TextField>
-    <Label text="Password" />
-    <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-border-radius: 500px; -fx-pref-height: 32; -fx-background-radius: 500px;">
-         <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-         </padding></PasswordField>
-     <HBox alignment="CENTER" maxWidth="455.0" prefHeight="63.0" prefWidth="0.0" spacing="10">
-       <Button fx:id="loginButton" defaultButton="true" onAction="#handleLogin" prefWidth="100.0" style="-fx-background-color: #4285f4; -fx-background-radius: 500; -fx-text-fill: white;" text="Login">
-            <padding>
-               <Insets bottom="10.0" top="10.0" />
-            </padding>
-            <font>
-               <Font name="Inter SemiBold" size="13.0" />
-            </font></Button>
-       <Button fx:id="cancelButton" onAction="#onCancelCloseApp" prefWidth="100.0" style="-fx-background-radius: 500;" text="Close">
-            <padding>
-               <Insets bottom="10.0" top="10.0" />
-            </padding>
-            <font>
-               <Font name="Inter Medium" size="13.0" />
-            </font></Button>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <padding>
-            <Insets bottom="20.0" top="20.0" />
-         </padding>
-     </HBox>
-      <padding>
-         <Insets left="10.0" right="10.0" />
+  <VBox alignment="CENTER_LEFT" maxWidth="463.0" prefHeight="148.0" prefWidth="463.0" spacing="10"
+        style="-fx-background-color: rgba(40,40,40,0.55); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #00000044, 20, 0.1, 0, 4); -fx-border-color: #444; -fx-border-radius: 20;">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
       </padding>
-  </VBox>    
+    <Label text="Email" style="-fx-text-fill: #b3b3b3;"/>
+    <TextField fx:id="usernameField" promptText="Enter your email"
+               style="-fx-background-color: rgba(255,255,255,0.08); -fx-border-radius: 15; -fx-background-radius: 15; -fx-text-fill: #fff; -fx-prompt-text-fill: #b3b3b388; -fx-border-color: #444; -fx-border-width: 1; -fx-pref-height: 38px;">
+      <padding>
+        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+      </padding>
+    </TextField>
+    <Label text="Password" style="-fx-text-fill: #b3b3b3;"/>
+    <PasswordField fx:id="passwordField" promptText="Enter your password"
+                   style="-fx-background-color: rgba(255,255,255,0.08); -fx-border-radius: 15; -fx-background-radius: 15; -fx-text-fill: #fff; -fx-prompt-text-fill: #b3b3b388; -fx-border-color: #444; -fx-border-width: 1; -fx-pref-height: 38px;">
+      <padding>
+        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+      </padding>
+    </PasswordField>
+    <HBox alignment="CENTER" maxWidth="455.0" prefHeight="63.0" prefWidth="0.0" spacing="10">
+      <Button fx:id="loginButton" defaultButton="true" onAction="#handleLogin" prefWidth="100.0"
+              style="-fx-background-color: #2f2f2f; -fx-background-radius: 15; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, #00000044, 8, 0.2, 0, 2); -fx-border-color: #444; -fx-border-radius: 15;">
+        <padding>
+          <Insets bottom="10.0" top="10.0" />
+        </padding>
+        <font>
+          <Font name="Inter SemiBold" size="13.0" />
+        </font>
+      </Button>
+      <Button fx:id="cancelButton" onAction="#onCancelCloseApp" prefWidth="100.0"
+              style="-fx-background-color: #2f2f2f; -fx-background-radius: 15; -fx-text-fill: #ffffff; -fx-border-color: #444; -fx-border-radius: 15;">
+        <padding>
+          <Insets bottom="10.0" top="10.0" />
+        </padding>
+        <font>
+          <Font name="Inter Medium" size="13.0" />
+        </font>
+      </Button>
+      <cursor>
+        <Cursor fx:constant="DEFAULT" />
+      </cursor>
+      <padding>
+        <Insets bottom="20.0" top="20.0" />
+      </padding>
+    </HBox>
+    <padding>
+      <Insets left="20.0" right="20.0" />
+    </padding>
+  </VBox>
 </VBox>

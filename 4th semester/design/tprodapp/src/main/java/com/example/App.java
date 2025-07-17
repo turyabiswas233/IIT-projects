@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         App.stage = stage;
-        scene = new Scene(loadFXML("primarypage"));
+        scene = new Scene(loadFXML("loginpage"));
         stage.setTitle(HomeController.getTitle());
         stage.setScene(scene);
         stage.setWidth(800);
@@ -42,7 +42,7 @@ public class App extends Application {
     }
 
     @FXML
-    public static Parent loadFXML(String fxml) throws IOException {
+    private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

@@ -55,25 +55,4 @@
          <Font name="Nunito ExtraLight" size="24.0" />
       </font>
    </Button>
-   <Button fx:id="dashboardButton" alignment="CENTER" contentDisplay="CENTER" onAction="#onGotoDashboardButtonClick" style="-fx-background-radius: 500; -fx-background-color: #121212; -fx-pref-width: 300; -fx-pref-height: 50;" text="Dashboard" textAlignment="CENTER">
-      <textFill>
-         <LinearGradient endX="1.0" endY="1.0">
-            <stops>
-               <Stop>
-                  <color>
-                     <Color red="0.14901961386203766" green="0.7372549176216125" blue="0.929411768913269" />
-                  </color>
-               </Stop>
-               <Stop offset="1.0">
-                  <color>
-                     <Color red="0.08900000154972076" green="0.8899999856948853" blue="0.4519159197807312" />
-                  </color>
-               </Stop>
-            </stops>
-         </LinearGradient>
-      </textFill>
-      <font>
-         <Font name="Nunito ExtraLight" size="24.0" />
-      </font>
-   </Button>
 </VBox>

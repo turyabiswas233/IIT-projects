@@ -1,8 +1,9 @@
-package com.example.controller;
+package com.example.controller.admin;
 
 import java.io.IOException;
 
 import com.example.App;
+import com.example.controller.Controller;
 import com.example.models.User;
 import com.example.utils.UserFactory;
 
@@ -22,8 +23,6 @@ public class UsersController implements Controller {
     private Button productsButton;
     @FXML
     private Button categoriesButton;
-    @FXML
-    private Button settingsButton;
     @FXML
     private Button logoutButton;
     @FXML
@@ -74,7 +73,7 @@ public class UsersController implements Controller {
         // make event for routing
         productsButton.setOnAction(e -> {
             try {
-                App.setRoot("dashboardpage", DashboardController.getTitle());
+                App.setRoot("admin/dashboardpage", DashboardController.getTitle());
             } catch (Exception err) {
                 System.err.println(err.getLocalizedMessage());
                 err.printStackTrace();
@@ -107,7 +106,7 @@ public class UsersController implements Controller {
     @FXML
     protected void onClickShowUsers() throws IOException {
         try {
-            App.setRoot("userspage", getTitle());
+            App.setRoot("admin/userspage", getTitle());
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
             e.printStackTrace();

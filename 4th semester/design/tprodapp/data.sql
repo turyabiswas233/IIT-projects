@@ -39,3 +39,6 @@ INSERT INTO products VALUES(3,'Product D',49,'Home & Kitchen',75);
 INSERT INTO products VALUES(4,'Product E',15,'Sports',150);
 INSERT INTO products VALUES(5,'Product F',5,'Toys',300);
 INSERT INTO products VALUES(6,'Pokemon Ball',250,'Toys',300);
+
+--ADMIN:  admin@gmail.com, admin
+--EMPLOY: employee@gmail.com, employee
