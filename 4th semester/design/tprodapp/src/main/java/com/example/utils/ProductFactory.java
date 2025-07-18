@@ -17,28 +17,7 @@ public class ProductFactory {
     }
 
     public ObservableList<Product> getProducts() {
-        if (products.isEmpty()) {
-            try {
-                getProducts(true); // Load products if cache is empty
-            } catch (Exception e) {
-                e.printStackTrace(System.err);
-            }
-        } else {
-            System.out.println("Returning cached products");
-        }
-        return products;
-    }
-
-    public ObservableList<Product> getProducts(boolean forceReload) {
-        if (!forceReload && !products.isEmpty()) {
-            System.out.println("Returning cached products");
-            return products; // Return cached products if not forced to reload
-        }
-        synchronized (ConnectDB.class) {
-            if (ConnectDB.getConnection() == null) {
-                ConnectDB.initDB();
-            }
-        }
+        ConnectDB.initDB();
         try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement("SELECT * FROM products;")) {
             clearProducts();
 

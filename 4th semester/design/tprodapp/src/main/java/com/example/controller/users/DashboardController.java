@@ -14,15 +14,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class DashboardController implements Controller {
+
     private ObservableList<Product> productData = FXCollections.observableArrayList();
     private ProductFactory productFactory = new ProductFactory();
 
     @FXML
-    private Button ordersButton;
-    @FXML
     private Button productsButton;
     @FXML
-    private Button categoriesButton;
+    private Button ordersButton;
+    @FXML
+    private Button customersButton;
     @FXML
     private Button logoutButton;
     @FXML
@@ -48,7 +49,7 @@ public class DashboardController implements Controller {
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
 
-        productData.addAll(productFactory.getProducts(true));
+        productData.addAll(productFactory.getProducts());
         productTable.setItems(productData);
 
         // Add listeners for search, add, edit, delete buttons
@@ -67,6 +68,25 @@ public class DashboardController implements Controller {
             }
         });
 
+        ordersButton.setOnMouseClicked(e -> {
+            try {
+                App.setRoot("users/orderspage");
+            } catch (Exception err) {
+                System.out.println("failed to load orders page" + err.getMessage());
+                err.printStackTrace();
+            }
+        });
+
+        customersButton.setOnMouseClicked(e -> {
+            try {
+                App.setRoot("users/customerspage");
+
+            } catch (Exception err) {
+                System.out.println("failed to load customers page" + err.getMessage());
+                err.printStackTrace();
+            }
+        });
+
     }
 
     @FXML
@@ -75,16 +95,6 @@ public class DashboardController implements Controller {
             App.setRoot("loginpage", LoginController.getTitle());
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void onClickShowCustomers() throws IOException {
-        try {
-            App.setRoot("customerspage", "Tb Product Management - Customers");
-        } catch (Exception e) {
-            System.err.println("Error loading customers view: " + e.getMessage());
             e.printStackTrace();
         }
     }

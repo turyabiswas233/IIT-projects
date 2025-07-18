@@ -40,7 +40,7 @@ public class RegisterController implements Controller {
     private void initialize() {
         // Initialize the admin type combo box with options
         adminTypeComboBox.getItems().clear();
-        adminTypeComboBox.getItems().addAll("Super Admin", "Admin", "User");
+        adminTypeComboBox.getItems().addAll("Super Admin", "Employee");
         adminTypeComboBox.getSelectionModel().selectFirst(); // Default selection
     }
 
@@ -58,7 +58,7 @@ public class RegisterController implements Controller {
                     fullNameField.getText(),
                     emailField.getText(),
                     passwordField.getText(),
-                    adminTypeComboBox.getValue());
+                    adminTypeComboBox.getValue().replace(' ', '_'));
             if (UserFactory.getInstance().addUser(user)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");

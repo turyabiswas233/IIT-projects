@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import com.example.ConnectDB;
 import com.example.controller.AuthController;
+import com.example.models.Employee;
 import com.example.models.User;
 
 import javafx.collections.ObservableList;
@@ -44,6 +45,27 @@ public class UserFactory {
         }
     }
 
+    public ObservableList<Employee> getEmployees() {
+        String query = "SELECT * FROM employees";
+        ObservableList<Employee> employees = javafx.collections.FXCollections.observableArrayList();
+        try (PreparedStatement statement = ConnectDB.getConnection().prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+            employees.clear();
+            while (resultSet.next()) {
+                Employee user = new Employee(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone")
+                        );
+                employees.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
+
     public boolean addUser(User user) {
         String query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = ConnectDB.getConnection().prepareStatement(query)) {
@@ -62,7 +84,6 @@ public class UserFactory {
         return false;
     }
 
-    
     public User getUser(String email) {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
@@ -71,7 +92,7 @@ public class UserFactory {
         }
         return null;
     }
-    
+
     public boolean hasUser(String email, String password) {
         loadUsers();
         for (User user : users) {
@@ -110,7 +131,6 @@ public class UserFactory {
         }
         return isSuccess;
     }
-
 
     public static UserFactory getInstance() {
         if (instance == null) {

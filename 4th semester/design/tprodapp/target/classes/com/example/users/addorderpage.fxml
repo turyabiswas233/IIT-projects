@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.users.AddOrderController">
+  <top>
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2323cf; -fx-padding: 10;">
+      <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Add New Order - Employee" />
+    </HBox>
+  </top>
+
+  <center>
+    <VBox alignment="CENTER" spacing="20" style="-fx-padding: 40;">
+      <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Create New Order" />
+      
+      <GridPane alignment="CENTER" hgap="10" vgap="15" style="-fx-padding: 20; -fx-background-color: #f9f9f9; -fx-border-color: #ddd; -fx-border-radius: 5;">
+        
+        <Label text="Customer:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+        <ComboBox fx:id="customerComboBox" prefWidth="200" promptText="Select Customer" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        
+        <Label text="Product:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+        <ComboBox fx:id="productComboBox" prefWidth="200" promptText="Select Product" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        
+        <Label text="Quantity:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;" />
+        <Spinner fx:id="quantitySpinner" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        
+        <Label text="Unit Price:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;" />
+        <TextField fx:id="unitPriceField" editable="false" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        
+        <Label text="Total Price:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;" />
+        <TextField fx:id="totalPriceField" editable="false" prefWidth="200" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        
+      </GridPane>
+      
+      <HBox alignment="CENTER" spacing="20">
+        <Button fx:id="createOrderButton" onAction="#onCreateOrderButtonClick" prefWidth="120" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px;" text="Create Order" />
+        <Button fx:id="cancelButton" onAction="#onCancelButtonClick" prefWidth="120" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14px;" text="Cancel" />
+      </HBox>
+      
+    </VBox>
+  </center>
+</BorderPane>

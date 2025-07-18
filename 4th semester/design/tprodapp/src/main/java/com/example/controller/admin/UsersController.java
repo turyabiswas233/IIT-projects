@@ -4,53 +4,54 @@ import java.io.IOException;
 
 import com.example.App;
 import com.example.controller.Controller;
-import com.example.models.User;
+import com.example.models.Employee;
 import com.example.utils.UserFactory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 
 public class UsersController implements Controller {
-    private ObservableList<User> usersData = FXCollections.observableArrayList();
+    
+    @FXML
+    private Button addEmployeeButton;
+
+    @FXML
+    private Button employeessButton;
+
+    private ObservableList<Employee> usersData = FXCollections.observableArrayList();
 
     @FXML
     private Button ordersButton;
     @FXML
-    private Button usersButton;
-    @FXML
     private Button productsButton;
-    @FXML
-    private Button categoriesButton;
     @FXML
     private Button logoutButton;
     @FXML
-    private TableColumn<User, Integer> idColumn;
+    private TableColumn<Employee, Integer> idColumn;
     @FXML
-    private TableColumn<User, String> nameColumn;
+    private TableColumn<Employee, String> nameColumn;
     @FXML
-    private TableColumn<User, String> emailColumn;
+    private TableColumn<Employee, String> emailColumn;
     @FXML
-    private TableColumn<User, String> roleColumn;
+    private TableColumn<Employee, String> phoneColumn;
     @FXML
-    private TableView<User> productTable;
+    private TableView<Employee> productTable;
     @FXML
     private TextField searchField;
-    @FXML
-    private Button editUserButton;
-    @FXML
-    private Button deleteUserButton;
 
     public static String getTitle() {
-        return "Tb User Management - Dashboard";
+        return "Tb Product Management - Admin";
     }
 
     @FXML
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
 
-        usersData.addAll(UserFactory.getInstance().getUsers());
+        usersData.addAll(UserFactory.getInstance().getEmployees());
+
         productTable.setItems(usersData);
 
         // Add listeners for search, add, edit, delete buttons
@@ -61,7 +62,7 @@ public class UsersController implements Controller {
         // set an event on click an item from the table
         productTable.setOnMouseClicked(event -> {
             if (event.getClickCount() > 0) {
-                User selectedProduct = productTable.getSelectionModel().getSelectedItem();
+                Employee selectedProduct = productTable.getSelectionModel().getSelectedItem();
                 if (selectedProduct != null) {
                     System.out.println(
                             "Selected Product: " + selectedProduct.getName() + ", Email: "
@@ -79,16 +80,28 @@ public class UsersController implements Controller {
                 err.printStackTrace();
             }
         });
-        // make event for deleting a product
-        deleteUserButton.setOnAction(e -> {
-            if (UserFactory.getInstance()
-                    .deleteProductById(productTable.getSelectionModel().getSelectedItem().getId())) {
-                System.out.println("Product deleted successfully.");
-                usersData.setAll(UserFactory.getInstance().getUsers());
-            } else {
-                System.err.println("Failed to delete product.");
+        ordersButton.setOnMouseClicked(e -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setContentText("Page not found");
+            alert.showAndWait();
+            // try {
+            // App.setRoot("orderspage");
+
+            // } catch (Exception err) {
+            // err.printStackTrace();
+            // }
+        });
+
+        addEmployeeButton.setOnAction(e -> {
+            try {
+                App.setRoot("admin/addemployeepage");
+
+            } catch (Exception err) {
+                System.out.println("failed to load page" + err.getLocalizedMessage());
+                err.printStackTrace();
             }
         });
+
     }
 
     @FXML
@@ -106,7 +119,7 @@ public class UsersController implements Controller {
     @FXML
     protected void onClickShowUsers() throws IOException {
         try {
-            App.setRoot("admin/userspage", getTitle());
+            App.setRoot("admin/employeespage", getTitle());
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
             e.printStackTrace();
@@ -114,8 +127,8 @@ public class UsersController implements Controller {
     }
 
     private void filterProductList(String searchText) {
-        ObservableList<User> filteredList = FXCollections.observableArrayList();
-        for (User u : usersData) {
+        ObservableList<Employee> filteredList = FXCollections.observableArrayList();
+        for (Employee u : usersData) {
             if (u.getName().toLowerCase().contains(searchText.toLowerCase()) ||
                     String.valueOf(u.getId()).contains(searchText)
                     || u.getEmail().toLowerCase().contains(searchText.toLowerCase())) {
