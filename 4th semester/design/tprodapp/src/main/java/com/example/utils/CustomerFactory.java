@@ -1,10 +1,8 @@
 package com.example.utils;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.example.ConnectDB;
 import com.example.models.Customer;

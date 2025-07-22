@@ -2,6 +2,7 @@ package com.example.controller.users;
 
 import java.text.DecimalFormat;
 
+import com.example.App;
 import com.example.controller.Controller;
 import com.example.models.Customer;
 import com.example.models.Product;
@@ -12,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class AddOrderController implements Controller {
@@ -77,7 +77,10 @@ public class AddOrderController implements Controller {
         productComboBox.setConverter(new StringConverter<Product>() {
             @Override
             public String toString(Product product) {
-                return product != null ? product.getName() + " - $" + priceFormat.format(product.getPrice()) + " (Available: " + product.getQuantity() + ")" : "";
+                return product != null
+                        ? product.getName() + " - $" + priceFormat.format(product.getPrice()) + " (Available: "
+                                + product.getQuantity() + ")"
+                        : "";
             }
 
             @Override
@@ -89,12 +92,12 @@ public class AddOrderController implements Controller {
         productComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 unitPriceField.setText("$" + priceFormat.format(newValue.getPrice()));
-                
+
                 // Update spinner max value based on available quantity
                 SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                    1, newValue.getQuantity(), 1);
+                        1, newValue.getQuantity(), 1);
                 quantitySpinner.setValueFactory(valueFactory);
-                
+
                 updateTotalPrice();
             } else {
                 unitPriceField.clear();
@@ -137,8 +140,8 @@ public class AddOrderController implements Controller {
         }
 
         if (quantity > selectedProduct.getQuantity()) {
-            showAlert(AlertType.WARNING, "Validation Error", 
-                "Quantity cannot exceed available stock (" + selectedProduct.getQuantity() + ").");
+            showAlert(AlertType.WARNING, "Validation Error",
+                    "Quantity cannot exceed available stock (" + selectedProduct.getQuantity() + ").");
             return;
         }
 
@@ -159,8 +162,12 @@ public class AddOrderController implements Controller {
     }
 
     private void closeWindow() {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        try {
+            App.setRoot("users/orderspage");
+        } catch (Exception e) {
+            System.out.println("failed to load orders page: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showAlert(AlertType alertType, String title, String message) {

@@ -21,6 +21,7 @@ public class OrderFactory {
 
     public static ObservableList<Customer> loadCustomers() {
         String sql = "SELECT id, name FROM customers";
+        ConnectDB.initDB();
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -36,6 +37,7 @@ public class OrderFactory {
 
     public static ObservableList<Product> loadProducts() {
         String sql = "SELECT id, name, price FROM products WHERE quantity > 0";
+        ConnectDB.initDB();
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -58,6 +60,7 @@ public class OrderFactory {
         } else {
             String orderSql = "INSERT INTO orders(customer_id, product_id, quantity) VALUES(?,?,?)";
             String updateProductSql = "UPDATE products SET quantity = quantity - ? WHERE id = ?";
+        ConnectDB.initDB();
 
             try (Connection conn = ConnectDB.getConnection()) {
                 conn.setAutoCommit(false); // Transaction
@@ -99,12 +102,13 @@ public class OrderFactory {
     public static ObservableList<Order> loadOrders() {
         ObservableList<Order> orderList = FXCollections.observableArrayList();
         String sql = "SELECT o.id, o.customer_id, o.product_id, o.quantity, o.order_date, " +
-                     "c.name as customer_name, p.name as product_name, p.price " +
-                     "FROM orders o " +
-                     "JOIN customers c ON o.customer_id = c.id " +
-                     "JOIN products p ON o.product_id = p.id " +
-                     "ORDER BY o.order_date DESC";
-        
+                "c.name as customer_name, p.name as product_name, p.price " +
+                "FROM orders o " +
+                "JOIN customers c ON o.customer_id = c.id " +
+                "JOIN products p ON o.product_id = p.id " +
+                "ORDER BY o.order_date DESC";
+        ConnectDB.initDB();
+
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -112,14 +116,13 @@ public class OrderFactory {
             while (rs.next()) {
                 double totalPrice = rs.getDouble("price") * rs.getInt("quantity");
                 Order order = new Order(
-                    rs.getInt("customer_id"),
-                    rs.getInt("product_id"),
-                    rs.getInt("quantity"),
-                    rs.getString("order_date"),
-                    rs.getString("customer_name"),
-                    rs.getString("product_name"),
-                    totalPrice
-                );
+                        rs.getInt("customer_id"),
+                        rs.getInt("product_id"),
+                        rs.getInt("quantity"),
+                        rs.getString("order_date"),
+                        rs.getString("customer_name"),
+                        rs.getString("product_name"),
+                        totalPrice);
                 order.setId(rs.getInt("id"));
                 orderList.add(order);
             }
@@ -148,13 +151,15 @@ public class OrderFactory {
     public static ObservableList<Product> loadAvailableProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = "SELECT id, name, category, price, quantity FROM products WHERE quantity > 0";
+        ConnectDB.initDB();
+
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                products.add(new Product(rs.getInt("id"), rs.getString("name"), 
-                    rs.getString("category"), rs.getDouble("price"), rs.getInt("quantity")));
+                products.add(new Product(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("category"), rs.getDouble("price"), rs.getInt("quantity")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

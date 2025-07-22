@@ -9,13 +9,9 @@ import com.example.utils.OrderFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -71,17 +67,7 @@ public class OrdersController implements Initializable {
     @FXML
     public void onAddOrderButtonClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/users/addorderpage.fxml"));
-            Parent root = loader.load();
-            
-            Stage stage = new Stage();
-            stage.setTitle("Add New Order");
-            stage.setScene(new Scene(root, 600, 500));
-            stage.show();
-            
-            // Refresh orders when the add order window is closed
-            stage.setOnHidden(e -> loadOrders());
-            
+            App.setRoot("users/addorderpage", "Add New Order");
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(AlertType.ERROR, "Error", "Failed to open Add Order page: " + e.getMessage());
