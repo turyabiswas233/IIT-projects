@@ -3,7 +3,7 @@ package com.example.controller.users;
 import java.io.IOException;
 
 import com.example.App;
-import com.example.controller.Controller;
+import com.example.controller.CustomerController;
 import com.example.controller.LoginController;
 import com.example.models.Product;
 import com.example.utils.ProductFactory;
@@ -13,11 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class DashboardController implements Controller {
+public class DashboardController {
 
     private ObservableList<Product> productData = FXCollections.observableArrayList();
-    private ProductFactory productFactory = new ProductFactory();
-
     @FXML
     private Button productsButton;
     @FXML
@@ -47,12 +45,9 @@ public class DashboardController implements Controller {
 
     @FXML
     public void initialize() {
-        // Load some dummy data (you'd replace this with database interaction)
-
-        productData.addAll(productFactory.getProducts());
+        productData.addAll(ProductFactory.getInstance().getProducts());
         productTable.setItems(productData);
 
-        // Add listeners for search, add, edit, delete buttons
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterProductList(newValue);
         });
@@ -68,18 +63,9 @@ public class DashboardController implements Controller {
             }
         });
 
-        ordersButton.setOnMouseClicked(e -> {
+        customersButton.setOnAction(e -> {
             try {
-                App.setRoot("users/orderspage");
-            } catch (Exception err) {
-                System.out.println("failed to load orders page" + err.getMessage());
-                err.printStackTrace();
-            }
-        });
-
-        customersButton.setOnMouseClicked(e -> {
-            try {
-                App.setRoot("users/customerspage");
+                App.setRoot("users/customerspage", CustomerController.getTitle());
 
             } catch (Exception err) {
                 System.out.println("failed to load customers page" + err.getMessage());
@@ -96,6 +82,16 @@ public class DashboardController implements Controller {
         } catch (Exception e) {
             System.err.println("Error loading login view: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onGotoOrderPageButtonClick() {
+        try {
+            App.setRoot("users/orderspage");
+        } catch (Exception err) {
+            System.out.println("failed to load orders page" + err.getMessage());
+            err.printStackTrace();
         }
     }
 

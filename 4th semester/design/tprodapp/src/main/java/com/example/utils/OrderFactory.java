@@ -15,13 +15,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class OrderFactory {
-
+    private static OrderFactory instance;
     private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
     private static ObservableList<Product> productList = FXCollections.observableArrayList();
 
-    public static ObservableList<Customer> loadCustomers() {
+    private OrderFactory() {
+        System.out.println("Created new Order Factory");
+    }
+
+    public ObservableList<Customer> loadCustomers() {
         String sql = "SELECT id, name FROM customers";
-        ConnectDB.initDB();
+
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -35,9 +39,9 @@ public class OrderFactory {
         return customerList;
     }
 
-    public static ObservableList<Product> loadProducts() {
+    public ObservableList<Product> loadProducts() {
         String sql = "SELECT id, name, price FROM products WHERE quantity > 0";
-        ConnectDB.initDB();
+
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -52,7 +56,7 @@ public class OrderFactory {
         return productList;
     }
 
-    public static boolean createOrder(Customer selectedCustomer, Product selectedProduct, Integer quantity) {
+    public boolean createOrder(Customer selectedCustomer, Product selectedProduct, Integer quantity) {
         boolean status = true;
 
         if (selectedCustomer == null || selectedProduct == null) {
@@ -60,10 +64,9 @@ public class OrderFactory {
         } else {
             String orderSql = "INSERT INTO orders(customer_id, product_id, quantity) VALUES(?,?,?)";
             String updateProductSql = "UPDATE products SET quantity = quantity - ? WHERE id = ?";
-        ConnectDB.initDB();
 
             try (Connection conn = ConnectDB.getConnection()) {
-                conn.setAutoCommit(false); // Transaction
+                conn.setAutoCommit(false);
 
                 try (PreparedStatement pstmtOrder = conn.prepareStatement(orderSql);
                         PreparedStatement pstmtUpdate = conn.prepareStatement(updateProductSql)) {
@@ -99,7 +102,7 @@ public class OrderFactory {
         return status;
     }
 
-    public static ObservableList<Order> loadOrders() {
+    public ObservableList<Order> loadOrders() {
         ObservableList<Order> orderList = FXCollections.observableArrayList();
         String sql = "SELECT o.id, o.customer_id, o.product_id, o.quantity, o.order_date, " +
                 "c.name as customer_name, p.name as product_name, p.price " +
@@ -107,12 +110,10 @@ public class OrderFactory {
                 "JOIN customers c ON o.customer_id = c.id " +
                 "JOIN products p ON o.product_id = p.id " +
                 "ORDER BY o.order_date DESC";
-        ConnectDB.initDB();
 
-        try (Connection conn = ConnectDB.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
-
+        try {
+            PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 double totalPrice = rs.getDouble("price") * rs.getInt("quantity");
                 Order order = new Order(
@@ -151,7 +152,6 @@ public class OrderFactory {
     public static ObservableList<Product> loadAvailableProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = "SELECT id, name, category, price, quantity FROM products WHERE quantity > 0";
-        ConnectDB.initDB();
 
         try (Connection conn = ConnectDB.getConnection();
                 Statement stmt = conn.createStatement();
@@ -165,5 +165,15 @@ public class OrderFactory {
             e.printStackTrace();
         }
         return products;
+    }
+
+    public static OrderFactory getInstance() {
+        synchronized (OrderFactory.class) {
+            if (instance == null) {
+                instance = new OrderFactory();
+            }
+            ConnectDB.initDB();
+        }
+        return instance;
     }
 }

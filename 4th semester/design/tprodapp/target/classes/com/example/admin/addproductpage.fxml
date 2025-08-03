@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefWidth="500.0" style="-fx-background-color: #f4f6fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.admin.ProductController">
-     <VBox layoutY="119.0" prefHeight="380.0" prefWidth="551.0" spacing="12" style="-fx-background-color: #fff; -fx-padding: 24; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #b0b0b0, 8, 0, 0, 2); -fx-max-width: 500;" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="119.0">
+     <VBox layoutY="119.0" prefHeight="380.0" prefWidth="551.0" spacing="12" style="-fx-background-color: #fff; -fx-padding: 24; -fx-background-radius: 500; -fx-effect: dropshadow(gaussian, #b0b0b0, 8, 0, 0, 2); -fx-max-width: 500;" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="119.0">
       <TextField fx:id="productNameField" promptText="Product Name" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
          <padding>
             <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />

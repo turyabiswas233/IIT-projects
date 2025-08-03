@@ -15,7 +15,7 @@ public class CustomerFactory {
     private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     public static ObservableList<Customer> loadCustomers() {
-        ConnectDB.initDB();
+        // ConnectDB.initDB();
 
         try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement("SELECT * FROM customers")) {
             ResultSet rs = pstmt.executeQuery();

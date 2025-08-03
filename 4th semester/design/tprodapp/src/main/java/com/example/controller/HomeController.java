@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
-public class HomeController implements Controller {
+public class HomeController  {
     @FXML
     private Label welcomeText;
 

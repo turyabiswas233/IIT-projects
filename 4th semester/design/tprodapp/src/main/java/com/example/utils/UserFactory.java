@@ -1,5 +1,6 @@
 package com.example.utils;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +16,8 @@ public class UserFactory {
     private static UserFactory instance = null;
     private static ObservableList<User> users = javafx.collections.FXCollections.observableArrayList();
 
-    public ObservableList<User> getUsers() {
-        try {
-            loadUsers();
-        } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
-            e.printStackTrace();
-        } finally {
-        }
-        return users;
+    private UserFactory() {
+        System.out.println("created new User Factory");
     }
 
     private void loadUsers() {
@@ -48,16 +42,16 @@ public class UserFactory {
     public ObservableList<Employee> getEmployees() {
         String query = "SELECT * FROM employees";
         ObservableList<Employee> employees = javafx.collections.FXCollections.observableArrayList();
-        try (PreparedStatement statement = ConnectDB.getConnection().prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery()) {
+        try (Connection conn = ConnectDB.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
             employees.clear();
             while (resultSet.next()) {
                 Employee user = new Employee(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("email"),
-                        resultSet.getString("phone")
-                        );
+                        resultSet.getString("phone"));
                 employees.add(user);
             }
         } catch (SQLException e) {
@@ -109,14 +103,9 @@ public class UserFactory {
 
     public boolean deleteProductById(int id) {
         boolean isSuccess = false;
-        try {
-            synchronized (ConnectDB.class) {
-                if (ConnectDB.getConnection() == null) {
-                    ConnectDB.initDB();
-                }
-            }
-            String sql = "DELETE FROM products WHERE id = ?";
-            PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql);
+        String sql = "DELETE FROM products WHERE id = ?";
+        try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql)) {
+
             pstmt.setInt(1, id);
             if (pstmt.executeUpdate() > 0) {
                 System.out.println("Product with ID " + id + " deleted successfully.");
@@ -127,19 +116,16 @@ public class UserFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-            ConnectDB.closeConnection();
         }
         return isSuccess;
     }
 
     public static UserFactory getInstance() {
-        if (instance == null) {
-            synchronized (UserFactory.class) {
-                if (instance == null) { // Double-checked locking
-                    ConnectDB.initDB(); // Ensure DB connection is initialized
-                }
+        synchronized (UserFactory.class) {
+            if (instance == null) {
+                instance = new UserFactory();
             }
-            instance = new UserFactory();
+            ConnectDB.initDB();
         }
         return instance;
     }

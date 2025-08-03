@@ -23,11 +23,10 @@
 
   <left>
     <VBox spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
-      <Button fx:id="productsButton" prefWidth="150" style="-fx-font-size: 16px;" text="Products" />
-      <Button fx:id="ordersButton" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
-      <Button fx:id="usersButton" onAction="#onClickShowUsers" prefWidth="150" style="-fx-font-size: 16px;" text="Employees" />
+      <Button fx:id="ordersButton" onAction="#onGotoOrderPageButtonClick" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Orders" />
+      <Button fx:id="usersButton" onAction="#onClickShowUsers" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Employees" />
       <VBox VBox.vgrow="ALWAYS" />
-      <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Logout" />
+      <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Logout" />
     </VBox>
   </left>
 
@@ -35,9 +34,8 @@
     <VBox spacing="10" style="-fx-padding: 20;">
       <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Product List" />
       <HBox alignment="CENTER_LEFT" spacing="10">
-        <Button fx:id="addProductButtonPage" onAction="#onGotoAddProductButtonClick" style="-fx-background-color: #2323cf;" text="Add New Product" textFill="#e7e7ee" />
-        <Button fx:id="editProductButton" style="-fx-background-color: #faca23;" text="Edit Selected" textFill="#1b1803" />
-        <Button fx:id="deleteProductButton" style="-fx-background-color: #ff3a6a;" text="Delete Selected" textFill="#f8e0e0" />
+        <Button fx:id="addProductButtonPage" onAction="#onGotoAddProductButtonClick" style="-fx-background-color: #2323cf; -fx-background-radius: 500; -fx-border-radius: 500;" text="Add New Product" textFill="#e7e7ee" />
+        <Button fx:id="deleteProductButton" style="-fx-background-color: #ff3a6a; -fx-background-radius: 500; -fx-border-radius: 500;" text="Delete Selected" textFill="#f8e0e0" />
       </HBox>
       <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
         <columns>

@@ -3,7 +3,6 @@ package com.example.controller.users;
 import java.text.DecimalFormat;
 
 import com.example.App;
-import com.example.controller.Controller;
 import com.example.models.Customer;
 import com.example.models.Product;
 import com.example.utils.OrderFactory;
@@ -15,7 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.StringConverter;
 
-public class AddOrderController implements Controller {
+public class AddOrderController {
 
     @FXML
     private ComboBox<Customer> customerComboBox;
@@ -51,10 +50,8 @@ public class AddOrderController implements Controller {
     }
 
     private void loadData() {
-        customers.clear();
-        products.clear();
-        customers.addAll(OrderFactory.loadCustomersWithPhone());
-        products.addAll(OrderFactory.loadAvailableProducts());
+        customers.setAll(OrderFactory.loadCustomersWithPhone());
+        products.setAll(OrderFactory.loadAvailableProducts());
     }
 
     private void setupComboBoxes() {
@@ -146,7 +143,7 @@ public class AddOrderController implements Controller {
         }
 
         // Create the order
-        boolean success = OrderFactory.createOrder(selectedCustomer, selectedProduct, quantity);
+        boolean success = OrderFactory.getInstance().createOrder(selectedCustomer, selectedProduct, quantity);
 
         if (success) {
             showAlert(AlertType.INFORMATION, "Success", "Order created successfully!");

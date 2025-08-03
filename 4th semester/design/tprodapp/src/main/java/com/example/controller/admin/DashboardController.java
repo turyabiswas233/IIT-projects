@@ -3,7 +3,6 @@ package com.example.controller.admin;
 import java.io.IOException;
 
 import com.example.App;
-import com.example.controller.Controller;
 import com.example.controller.LoginController;
 import com.example.models.Product;
 import com.example.utils.ProductFactory;
@@ -12,18 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 
-public class DashboardController implements Controller {
+public class DashboardController {
     private ObservableList<Product> productData = FXCollections.observableArrayList();
-    private ProductFactory productFactory = new ProductFactory();
 
     @FXML
     private Button ordersButton;
     @FXML
     private Button usersButton;
-    @FXML
-    private Button productsButton;
     @FXML
     private Button logoutButton;
     @FXML
@@ -55,7 +50,7 @@ public class DashboardController implements Controller {
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
 
-        productData.addAll(productFactory.getProducts( ));
+        productData.setAll(ProductFactory.getInstance().getProducts());
         productTable.setItems(productData);
 
         // Add listeners for search, add, edit, delete buttons
@@ -74,36 +69,16 @@ public class DashboardController implements Controller {
             }
         });
 
-        productsButton.setOnAction(e -> {
-            try {
-                App.setRoot("admin/dashboardpage", DashboardController.getTitle());
-            } catch (Exception err) {
-                System.err.println(err.getLocalizedMessage());
-                err.printStackTrace();
-            }
-        });
-
         // make event for deleting a product
         deleteProductButton.setOnAction(e -> {
-            if (productFactory.deleteProductById(productTable.getSelectionModel().getSelectedItem().getId())) {
+            if (ProductFactory.getInstance()
+                    .deleteProductById(productTable.getSelectionModel().getSelectedItem().getId())) {
                 System.out.println("Product deleted successfully.");
-                productData.setAll(productFactory.getProducts());
+                productData.setAll(ProductFactory.getInstance().getProducts());
             } else {
                 System.err.println("Failed to delete product.");
             }
         });
-        ordersButton.setOnMouseClicked(e -> {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setContentText("Page not found");
-            alert.showAndWait();
-            // try {
-            // App.setRoot("orderspage");
-
-            // } catch (Exception err) {
-            // err.printStackTrace();
-            // }
-        });
-        
     }
 
     @FXML
@@ -117,7 +92,17 @@ public class DashboardController implements Controller {
     }
 
     @FXML
-    protected void onClickShowUsers() throws IOException {
+    protected void onGotoOrderPageButtonClick() {
+        try {
+            App.setRoot("admin/orderspage");
+        } catch (Exception err) {
+            System.out.println("failed to load orders page" + err.getMessage());
+            err.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onClickShowUsers() {
         try {
 
             App.setRoot("admin/employeespage", UsersController.getTitle());
@@ -128,8 +113,8 @@ public class DashboardController implements Controller {
         }
     }
 
-     @FXML
-    protected void onClickShowCustomers() throws IOException {
+    @FXML
+    protected void onClickShowCustomers() {
         try {
             App.setRoot("customerspage", "Tb Product Management - Customers");
         } catch (Exception e) {
@@ -139,7 +124,7 @@ public class DashboardController implements Controller {
     }
 
     @FXML
-    protected void onGotoAddProductButtonClick() throws IOException {
+    protected void onGotoAddProductButtonClick() {
         try {
 
             App.setRoot("admin/addproductpage");

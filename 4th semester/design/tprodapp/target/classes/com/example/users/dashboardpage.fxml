@@ -23,8 +23,7 @@
 
   <left>
     <VBox spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
-      <Button fx:id="productsButton" prefWidth="150" style="-fx-font-size: 16px;" text="Products" />
-      <Button fx:id="ordersButton" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
+      <Button fx:id="ordersButton" onAction="#onGotoOrderPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
       <Button fx:id="customersButton" prefWidth="150" style="-fx-font-size: 16px;" text="Customers" />
       <VBox VBox.vgrow="ALWAYS" />
       <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Logout" />

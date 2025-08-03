@@ -11,15 +11,20 @@ import javafx.collections.ObservableList;
 
 public class ProductFactory {
     private ObservableList<Product> products = javafx.collections.FXCollections.observableArrayList();
+    private static ProductFactory instance;
+
+    private ProductFactory() {
+        System.out.println("Created new Product Factory");
+    }
 
     private void addProduct(Product product) {
         products.add(product);
     }
 
     public ObservableList<Product> getProducts() {
-        ConnectDB.initDB();
+        // ConnectDB.initDB();
         try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement("SELECT * FROM products;")) {
-            clearProducts();
+            products.clear();
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -33,7 +38,6 @@ public class ProductFactory {
             }
         } catch (Exception e) {
             e.printStackTrace(System.err);
-            ConnectDB.closeConnection();
         }
         return products;
     }
@@ -50,11 +54,9 @@ public class ProductFactory {
     public boolean deleteProductById(int id) {
         boolean isSuccess = false;
         try {
-            synchronized (ConnectDB.class) {
-                if (ConnectDB.getConnection() == null) {
-                    ConnectDB.initDB();
-                }
-            }
+
+            ConnectDB.initDB();
+
             String sql = "DELETE FROM products WHERE id = ?";
             PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql);
             pstmt.setInt(1, id);
@@ -67,7 +69,6 @@ public class ProductFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-            ConnectDB.closeConnection();
         }
         return isSuccess;
     }
@@ -78,14 +79,13 @@ public class ProductFactory {
             System.err.println("Product is null, cannot upload.");
             return isSuccess;
         }
-        try {
-            synchronized (ConnectDB.class) {
-                if (ConnectDB.getConnection() == null) {
-                    ConnectDB.initDB();
-                }
-            }
-            String sql = "INSERT INTO products (name, category, price, quantity) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql);
+
+        if (ConnectDB.getConnection() == null) {
+            ConnectDB.initDB();
+        }
+        String sql = "INSERT INTO products (name, category, price, quantity) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement(sql);) {
+
             // pstmt.setInt(1, getNextProductId()); // Use the next product ID
             pstmt.setString(1, product.getName());
             pstmt.setString(2, product.getCategory());
@@ -107,7 +107,6 @@ public class ProductFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-            ConnectDB.closeConnection();
         }
         return isSuccess;
     }
@@ -120,7 +119,13 @@ public class ProductFactory {
         }
     }
 
-    private void clearProducts() {
-        products.clear();
+    public static ProductFactory getInstance() {
+        synchronized (ProductFactory.class) {
+            if (instance == null) {
+                instance = new ProductFactory();
+            }
+            ConnectDB.initDB();
+        }
+        return instance;
     }
 }

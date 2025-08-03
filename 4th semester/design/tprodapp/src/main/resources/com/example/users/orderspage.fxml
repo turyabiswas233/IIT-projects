@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.users.OrdersController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.OrdersController">
   <top>
     <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2323cf; -fx-padding: 10;">
       <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Orders Management - Employee" />
@@ -25,7 +25,6 @@
   <left>
     <VBox spacing="10" style="-fx-background-color: #f4f4f4; -fx-padding: 10;">
       <Button fx:id="productsButton" onAction="#onProductsButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Products" />
-      <Button fx:id="ordersButton" onAction="#onOrdersButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Orders" />
       <Button fx:id="customersButton" onAction="#onCustomersButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Customers" />
       <VBox VBox.vgrow="ALWAYS" />
       <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px;" text="Logout" />

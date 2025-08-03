@@ -9,10 +9,8 @@ import com.example.utils.UserFactory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-public class LoginController implements Controller {
+public class LoginController {
     @FXML
     private Button loginButtonAdmin;
     @FXML
@@ -97,21 +95,20 @@ public class LoginController implements Controller {
 
     @FXML
     private void initialize() {
-        btnHoverBlack(loginButtonAdmin);
-        btnHoverBlack(loginButtonEmployee);
-        btnHoverBlack(cancelButton);
+        btnHoverBlack(loginButtonAdmin, "#0dc453");
+        btnHoverBlack(loginButtonEmployee, "#2591cf");
+        btnHoverBlack(cancelButton, "#d85656");
     }
 
-    private void btnHoverBlack(Button t) {
-        Paint oldColor = t.getTextFill();
+    private void btnHoverBlack(Button t, String color) {
         String oldStyle = t.getStyle();
+
         t.setOnMouseEntered(e -> {
-            t.setStyle("-fx-background-color: #323232; -fx-background-radius: 15; -fx-font-weight: bold; -fx-border-radius: 15;");
-            t.setTextFill(Color.WHITESMOKE);
+            t.setStyle("-fx-background-color: " + color + "; -fx-border-color: #444; -fx-border-width: 1; -fx-border-radius: 50; -fx-background-radius: 50;");
+
         });
         t.setOnMouseExited(e -> {
             t.setStyle(oldStyle);
-            t.setTextFill(oldColor);
         });
 
     }

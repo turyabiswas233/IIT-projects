@@ -1,25 +1,21 @@
 # Instructions
-
-## Installing Maven with Java
+##NB: use **VSCODE** to run `App.java` file. Sometimes my projects does not work in `Intellij IDEA`
+## Installing Java
 1. Ensure you have Java installed:
     ```bash
     java -version
     ```
     If not installed, download and install Java from [Oracle](https://www.oracle.com/java/) or use your package manager.
 
-2. Install Maven:
+2. Install:
     - On Ubuntu/Debian:
       ```bash
       sudo apt update
-      sudo apt install maven
-      ```
-    - On macOS (using Homebrew):
-      ```bash
-      brew install maven
+      sudo apt install openjdk-24-jdk
       ```
     - On Windows, download the installer from [Maven's official site](https://maven.apache.org/).
 
-3. Verify Maven installation:
+3. Verify installation:
     ```bash
     mvn -version
     ```

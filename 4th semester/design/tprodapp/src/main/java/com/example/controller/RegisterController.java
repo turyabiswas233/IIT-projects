@@ -10,7 +10,7 @@ import com.example.utils.UserFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class RegisterController implements Controller {
+public class RegisterController  {
     @FXML
     private Button backButton;
 

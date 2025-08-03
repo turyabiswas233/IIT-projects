@@ -17,13 +17,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
         App.stage = stage;
         scene = new Scene(loadFXML("loginpage"));
         stage.setTitle(HomeController.getTitle());
         stage.setScene(scene);
-        stage.setWidth(800);
-        stage.setHeight(600);
+        stage.setWidth(850);
+        stage.setHeight(650);
         stage.setResizable(false);
         stage.show();
     }
@@ -31,6 +30,13 @@ public class App extends Application {
     @FXML
     public static void setRoot(String fxml) throws IOException {
         App.scene.setRoot(loadFXML(fxml));
+        App.stage.show();
+    }
+
+    @FXML
+    public static void setRoot(String title, FXMLLoader p) throws IOException {
+        App.scene.setRoot(p.load());
+        App.stage.setTitle(title);
         App.stage.show();
     }
 

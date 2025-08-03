@@ -115,36 +115,36 @@ public class Order {
         this.totalPrice.set(totalPrice);
     }
 
-    // Property getters for JavaFX binding
-    public IntegerProperty idProperty() {
-        return id;
-    }
+    // // Property getters for JavaFX binding
+    // public IntegerProperty idProperty() {
+    //     return id;
+    // }
 
-    public IntegerProperty customerIdProperty() {
-        return customerId;
-    }
+    // public IntegerProperty customerIdProperty() {
+    //     return customerId;
+    // }
 
-    public IntegerProperty productIdProperty() {
-        return productId;
-    }
+    // public IntegerProperty productIdProperty() {
+    //     return productId;
+    // }
 
-    public IntegerProperty quantityProperty() {
-        return quantity;
-    }
+    // public IntegerProperty quantityProperty() {
+    //     return quantity;
+    // }
 
-    public StringProperty orderDateProperty() {
-        return orderDate;
-    }
+    // public StringProperty orderDateProperty() {
+    //     return orderDate;
+    // }
 
-    public StringProperty customerNameProperty() {
-        return customerName;
-    }
+    // public StringProperty customerNameProperty() {
+    //     return customerName;
+    // }
 
-    public StringProperty productNameProperty() {
-        return productName;
-    }
+    // public StringProperty productNameProperty() {
+    //     return productName;
+    // }
 
-    public DoubleProperty totalPriceProperty() {
-        return totalPrice;
-    }
+    // public DoubleProperty totalPriceProperty() {
+    //     return totalPrice;
+    // }
 }

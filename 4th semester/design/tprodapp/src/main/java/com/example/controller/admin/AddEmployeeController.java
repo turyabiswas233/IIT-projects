@@ -45,8 +45,7 @@ public class AddEmployeeController {
         User user = new User(name, email, password, "employee");
         String employeeSql = "INSERT INTO employees(name, email, phone) VALUES(?,?,?)";
 
-        UserFactory userFactory = new UserFactory();
-        if (userFactory.addUser(user)) {
+        if (UserFactory.getInstance().addUser(user)) {
             try (
                     Connection conn = ConnectDB.getConnection();
                     PreparedStatement pstmtEmployee = conn.prepareStatement(employeeSql)) {
@@ -72,10 +71,12 @@ public class AddEmployeeController {
         }
 
     }
-    @FXML 
+
+    @FXML
     protected void goToEmployeePage() throws IOException {
         App.setRoot("admin/employeespage");
     }
+
     private void clearFields() {
         nameField.clear();
         emailField.clear();
@@ -85,6 +86,7 @@ public class AddEmployeeController {
 
     @FXML
     private void initialize() {
-        // Hint: initialize() will be called when the associated FXML has been completely loaded.
+        // Hint: initialize() will be called when the associated FXML has been
+        // completely loaded.
     }
 }

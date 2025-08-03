@@ -3,8 +3,6 @@ package com.example.controller.admin;
 import java.io.IOException;
 
 import com.example.App;
-import com.example.ConnectDB;
-import com.example.controller.Controller;
 import com.example.controller.HomeController;
 import com.example.models.Product;
 import com.example.utils.ProductFactory;
@@ -14,12 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class ProductController implements Controller {
+public class ProductController {
 
-    private ProductFactory productFactory = new ProductFactory();
-
-    final ConnectDB db = new ConnectDB();
-     
     @FXML
     private Button addProductButton;
 
@@ -46,7 +40,7 @@ public class ProductController implements Controller {
     @FXML
     public void initialize() {
         // Load some dummy data (you'd replace this with database interaction)
-        productData.addAll(productFactory.getProducts());
+        productData.setAll(ProductFactory.getInstance().getProducts());
         productData.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
 
         productData.forEach(e -> {
@@ -54,14 +48,13 @@ public class ProductController implements Controller {
         });
         productCategoryField.getItems().add("Other");
         productCategoryField.getSelectionModel().selectFirst();
-        productIdField.setText(String.valueOf(productFactory.getNextProductId()));
+        productIdField.setText(String.valueOf(ProductFactory.getInstance().getNextProductId()));
     }
 
     protected <T> String getText(T tf) {
         if (tf instanceof TextField) {
             return ((TextField) tf).getText();
-        }
-        else if(tf instanceof ComboBox){
+        } else if (tf instanceof ComboBox) {
             return ((ComboBox<?>) tf).getSelectionModel().getSelectedItem().toString();
         }
         return null;
@@ -89,7 +82,7 @@ public class ProductController implements Controller {
                 Double.parseDouble(getText(productPriceField)), Integer.parseInt(getText(productQuantityField)));
 
         try {
-            if (productFactory.uploadProduct(newProduct)) {
+            if (ProductFactory.getInstance().uploadProduct(newProduct)) {
                 System.out.println("Product added successfully.");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");

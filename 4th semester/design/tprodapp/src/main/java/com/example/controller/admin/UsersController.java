@@ -2,24 +2,19 @@ package com.example.controller.admin;
 
 import java.io.IOException;
 
-import com.example.App;
-import com.example.controller.Controller;
+import com.example.App; 
 import com.example.models.Employee;
 import com.example.utils.UserFactory;
 
+import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 
-public class UsersController implements Controller {
-    
+public class UsersController  {
+
     @FXML
     private Button addEmployeeButton;
-
-    @FXML
-    private Button employeessButton;
 
     private ObservableList<Employee> usersData = FXCollections.observableArrayList();
 
@@ -70,38 +65,6 @@ public class UsersController implements Controller {
                 }
             }
         });
-
-        // make event for routing
-        productsButton.setOnAction(e -> {
-            try {
-                App.setRoot("admin/dashboardpage", DashboardController.getTitle());
-            } catch (Exception err) {
-                System.err.println(err.getLocalizedMessage());
-                err.printStackTrace();
-            }
-        });
-        ordersButton.setOnMouseClicked(e -> {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setContentText("Page not found");
-            alert.showAndWait();
-            // try {
-            // App.setRoot("orderspage");
-
-            // } catch (Exception err) {
-            // err.printStackTrace();
-            // }
-        });
-
-        addEmployeeButton.setOnAction(e -> {
-            try {
-                App.setRoot("admin/addemployeepage");
-
-            } catch (Exception err) {
-                System.out.println("failed to load page" + err.getLocalizedMessage());
-                err.printStackTrace();
-            }
-        });
-
     }
 
     @FXML
@@ -117,6 +80,26 @@ public class UsersController implements Controller {
     }
 
     @FXML
+    protected void onGotoDashboardButtonClick() {
+        try {
+            App.setRoot("admin/dashboardpage", DashboardController.getTitle());
+        } catch (Exception err) {
+            System.err.println(err.getLocalizedMessage());
+            err.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onGotoOrderPageButtonClick()  {
+        try {
+            App.setRoot("admin/orderspage");
+        } catch (Exception err) {
+            System.out.println("failed to load orders page" + err.getMessage());
+            err.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void onClickShowUsers() throws IOException {
         try {
             App.setRoot("admin/employeespage", getTitle());
@@ -125,6 +108,17 @@ public class UsersController implements Controller {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    protected void onGotoAddEmployeeButtonClick() {
+            try {
+                App.setRoot("admin/addemployeepage");
+
+            } catch (Exception err) {
+                System.out.println("failed to load page" + err.getLocalizedMessage());
+                err.printStackTrace();
+            }
+        }
 
     private void filterProductList(String searchText) {
         ObservableList<Employee> filteredList = FXCollections.observableArrayList();
