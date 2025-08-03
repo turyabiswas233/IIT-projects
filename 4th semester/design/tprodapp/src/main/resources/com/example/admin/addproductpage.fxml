@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefWidth="500.0" style="-fx-background-color: #f4f6fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.admin.ProductController">
+     <VBox layoutY="119.0" prefHeight="380.0" prefWidth="551.0" spacing="12" style="-fx-background-color: #fff; -fx-padding: 24; -fx-background-radius: 500; -fx-effect: dropshadow(gaussian, #b0b0b0, 8, 0, 0, 2); -fx-max-width: 500;" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="119.0">
+      <TextField fx:id="productNameField" promptText="Product Name" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding>
+      </TextField>
+      <TextField fx:id="productIdField" editable="false" promptText="Product ID" style="-fx-border-radius: 500px; -fx-pref-height: 32px; -fx-background-radius: 500px;">
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </padding>
+      </TextField> 
+      <HBox alignment="CENTER_LEFT" prefHeight="6.0" prefWidth="523.0">
+         <children>
+            <TextField fx:id="productPriceField" prefHeight="23.0" prefWidth="249.0" promptText="Price" style="-fx-background-radius: 500; -fx-border-radius: 500; -fx-pref-height: 24;">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="productQuantityField" prefHeight="23.0" prefWidth="234.0" promptText="Quantity" style="-fx-background-radius: 500; -fx-border-radius: 500; -fx-pref-height: 24;">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" prefHeight="116.0" prefWidth="523.0" spacing="20">
+         <children>
+               <ComboBox fx:id="productCategoryField" prefHeight="38.0" prefWidth="523.0" promptText="Category" style="-fx-background-radius: 500;" />
+               <Button fx:id="addProductButton" defaultButton="true" onAction="#onHandleProductAddClick" prefHeight="35.0" prefWidth="523.0" style="-fx-background-color: #2d8cf0; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 500;" text="Add Product">
+               <font>
+                  <Font name="Inter Black" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+     </VBox>
+   <HBox alignment="CENTER" layoutX="125.0" layoutY="51.0" prefHeight="57.0" prefWidth="250.0">
+      <children>
+         <Button fx:id="backHome" onAction="#onGotoHomePageButtonClick" style="-fx-background-color: #3f3f3f; -fx-background-radius: 500; -fx-text-fill: white;" text="⬅" textFill="#bf0f0f" />
+           <Label prefHeight="47.0" prefWidth="250.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2d3e50;" text="Add New Product" textAlignment="CENTER">
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+         </Label>
+      </children>
+   </HBox>
+</AnchorPane>
